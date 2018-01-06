@@ -48,11 +48,48 @@ tags:
 
 ## 发布到github
 ### 注册github
+注册过程不多说，注册完成后，按照如下页面所示设置GitHub Pages https://pages.github.com/
 
+### SSH key配置
+```
+$ cd ~/. ssh #检查本机已存在的ssh密钥
+```
+如果提示：No such file or directory 说明你是第一次使用git。
+```
+ssh-keygen -t rsa -C "邮件地址"
+```
+
+然后连续3次回车，最终会生成一个文件在用户目录下，打开用户目录，找到.ssh\id_rsa.pub文件，记事本打开并复制里面的内容，打开你的github主页，进入个人设置 -> SSH and GPG keys -> New SSH key：
+![add ssh key](GitHub博客部署/add ssh key.png)
+然后在git bash中配置
+```
+$ git config --global user.name "liuxianan"// 你的github用户名，非昵称
+$ git config --global user.email  "xxx@qq.com"// 填写你的github注册邮箱
+```
+
+### 上传插件安装
 ```
     npm install hexo-deployer-git –save
 ```
    ![install deployer](GitHub博客部署/install deployer.png)
+   然后在你博客的目录下找到_config.yml配置deploy部分
+![deploy set](GitHub博客部署/deploy set.png)
+
+工具都安装完成后，就可以写博客了
+
+
+
+## hexo常用命令
+```
+hexo new "postName" #新建文章
+hexo new page "pageName" #新建页面
+hexo generate #生成静态页面至public目录
+hexo server #开启预览访问端口（默认端口4000，'ctrl + c'关闭server）
+hexo deploy #部署到GitHub
+hexo help  # 查看帮助
+hexo version  #查看Hexo的版本
+```
+
 
    
 
