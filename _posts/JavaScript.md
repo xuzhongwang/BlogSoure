@@ -12,8 +12,6 @@ var fn = function () { };
 console.log(fn instanceof Object);  // true
 ```
 
-# prototype（自己猜想）
-prototype指向实例
 
 # 对象-若干属性和集合
 - JavaScript的一切皆是对象

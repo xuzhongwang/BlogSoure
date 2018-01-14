@@ -77,10 +77,8 @@ $ git config --global user.email  "xxx@qq.com"// 填写你的github注册邮箱
 
 工具都安装完成后，就可以写博客了
 
-
-
-## hexo常用命令
-```
+## hexo常用命令 
+``` 
 hexo new "postName" #新建文章
 hexo new page "pageName" #新建页面
 hexo generate #生成静态页面至public目录
