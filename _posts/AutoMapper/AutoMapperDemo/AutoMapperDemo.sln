@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMapperDemo", "AutoMapperDemo\AutoMapperDemo.csproj", "{79F29EBB-DEFC-4CCA-893C-10039D114FEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMapperDemoTests", "AutoMapperDemoTests\AutoMapperDemoTests.csproj", "{DBC092FB-5C45-4CDD-AF86-E8E13E83581F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79F29EBB-DEFC-4CCA-893C-10039D114FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79F29EBB-DEFC-4CCA-893C-10039D114FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79F29EBB-DEFC-4CCA-893C-10039D114FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79F29EBB-DEFC-4CCA-893C-10039D114FEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBC092FB-5C45-4CDD-AF86-E8E13E83581F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBC092FB-5C45-4CDD-AF86-E8E13E83581F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBC092FB-5C45-4CDD-AF86-E8E13E83581F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBC092FB-5C45-4CDD-AF86-E8E13E83581F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0D6F58CA-6BBC-46AC-A3EE-A877882B152A}
+	EndGlobalSection
+EndGlobal
