@@ -272,3 +272,361 @@ log4net.Config.BasicConfigurator.Configure();
 20 [1688] INFO log1 A B C - Test
 ```
 当log4net框架被配置好以后，就可以如前所述使用日志功能了。
+
+# 解决log4net独占日志文件的问题以及 log4net的各种输出配置(Appender)
+
+
+由于log4net默认情况下会独占日志文件，该文件不能被File.Open。
+可以通过增加配置：<lockingModel type="log4net.Appender.FileAppender+MinimalLock" />来使用最小锁定模型（minimal locking model），以允许多个进程可以写入同一个文件。
+
+
+各种appender说明：
+在log4net的配置中，appender是最重要的部分，一般来说，每一种appender都表示一种日志的输出介质，如日志文件、EvengLog、数据库、控制台、邮件、ASP.NET页面等。
+
+本文对各种内置的appender的配置提供了示例，但却远称不上详尽。要想了解每一种appender的参数和选项的说明，请参看该appender的SDK文档。 
+
+以下示例都是.NET 2.0下进行的, log4net的版本为1.2.10。
+
+AdoNetAppender
+详情参考 log4net.Appender. AdoNetAppender SDK文档。
+
+AdoNetAppender的相关配置内容取决于目标数据库的provider。下面仅提供SQL Server 2000的例子。
+
+首先建立数据表：
+
+ 
+
+CREATE TABLE [dbo].[Log]
+ (
+    [Id] [int] IDENTITY (1, 1) NOT NULL,
+    [Date] [datetime] NOT NULL,
+    [Thread] [varchar] (255) NOT NULL,
+    [Level] [varchar] (50) NOT NULL,
+    [Logger] [varchar] (255) NOT NULL,
+    [Message] [varchar] (4000) NOT NULL,
+    [Exception] [varchar] (2000) NULL
+)
+
+然后添加配置：
+ 
+
+<appender name="AdoNetAppender" type="log4net.Appender.AdoNetAppender">
+    <bufferSize value="2" />
+    <connectionType value="System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=Neutral, PublicKeyToken=b77a5c561934e089" />
+    <connectionString value="server=(local);database=TestBase;integrated security=false;persist security info=True;UID=sa;PWD=" />
+    <commandText value="INSERT INTO Log ([Date],[Thread],[Level],[Logger],[Message],[Exception]) VALUES (@log_date, @thread, @log_level, @logger, @message, @exception)" />
+    <parameter>
+        <parameterName value="@log_date" />
+        <dbType value="DateTime" />
+        <layout type="log4net.Layout.RawTimeStampLayout" />
+    </parameter>
+    <parameter>
+        <parameterName value="@thread" />
+        <dbType value="String" />
+        <size value="255" />
+        <layout type="log4net.Layout.PatternLayout">
+            <conversionPattern value="%thread" />
+        </layout>
+    </parameter>
+    <parameter>
+        <parameterName value="@log_level" />
+        <dbType value="String" />
+        <size value="50" />
+        <layout type="log4net.Layout.PatternLayout">
+            <conversionPattern value="%level" />
+        </layout>
+    </parameter>
+    <parameter>
+        <parameterName value="@logger" />
+        <dbType value="String" />
+        <size value="255" />
+        <layout type="log4net.Layout.PatternLayout">
+            <conversionPattern value="%logger" />
+        </layout>
+    </parameter>
+    <parameter>
+        <parameterName value="@message" />
+        <dbType value="String" />
+        <size value="4000" />
+        <layout type="log4net.Layout.PatternLayout">
+            <conversionPattern value="%message" />
+        </layout>
+    </parameter>
+    <parameter>
+        <parameterName value="@exception" />
+        <dbType value="String" />
+        <size value="2000" />
+        <layout type="log4net.Layout.ExceptionLayout" />
+    </parameter>
+</appender>
+
+bufferSize表示批处理的日志事件，可以避免每次日志事件都访问数据库；ConnectionType指定了要使用的IDbConnection的完全限定类型名称；connectionString表示连接字符串；CommandText是SQL语句或存储过程；最后一组parameter节点描述了SQL语句或存储过程需要的参数。 
+ 
+
+AspNetTraceAppender 
+
+详情参考 log4net.Appender.AspNetTraceAppender SDK 文档。  
+ 
+
+<appender name="AspNetTraceAppender" type="log4net.Appender.AspNetTraceAppender" >
+    <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%date [%thread] %-5level %logger [%property{NDC}] - %message%newline" />
+    </layout>
+</appender>
+
+这段配置可将日志信息输出到页面的Trace上下文环境。如果日志的级别低于WARN，会以System.Web.TraceContext.Write方法输出；如果级别为WARN或WARN以上则会以System.Web.TraceContext.Warn方法输出，下图中的日志信息的不同颜色可以说明这一点。效果图如下：
+
+ 
+
+这在进行页面调试的时候可是很方便的。
+BufferingForwardingAppender
+
+详情参考 log4net.Appender.BufferingForwardingAppender SDK 文档。 
+
+<appender name="BufferingForwardingAppender" type="log4net.Appender.BufferingForwardingAppender" >
+    <bufferSize value="5"/>
+    <lossy value="true" />
+    <evaluator type="log4net.Core.LevelEvaluator">
+        <threshold value="WARN"/>
+    </evaluator>
+    <appender-ref ref="LogFileAppender" />
+    <appender-ref ref="AspNetTraceAppender" />
+</appender>
+
+BufferingForwardingAppender的主要作用是将输出到指定类型（这里是LogFileAppender）的Appender的日志信息进行缓存。bufferSize属性指定了缓存的数量，如果value为5，那么将在信息量达到6条的时候，把这些日志批量输出。appender-ref属性指定了缓存的Appender类型，同root节点一样，这里可以指定多个。 
+
+ColoredConsoleAppender 
+详情参考log4net.Appender.ColoredConsoleAppender SDK 文档。
+
+ColoredConsoleAppender将日志信息输出到控制台。默认情况下，日志信息被发送到控制台标准输出流。下面这个示例演示了如何高亮显示Error信息。 
+
+<appender name="ColoredConsoleAppender" type="log4net.Appender.ColoredConsoleAppender">
+    <mapping>
+        <level value="ERROR" />
+        <foreColor value="White" />
+        <backColor value="Red, HighIntensity" />
+    </mapping>
+    <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%date [%thread] %-5level %logger [%property{NDC}] - %message%newline" />
+    </layout>
+</appender>
+
+效果如下：
+
+
+还可以为不同的级别指定不同的颜色： 
+
+<appender name="ColoredConsoleAppender" type="log4net.Appender.ColoredConsoleAppender">
+    <mapping>
+        <level value="ERROR" />
+        <foreColor value="White" />
+        <backColor value="Red, HighIntensity" />
+    </mapping>
+    <mapping>
+        <level value="DEBUG" />
+        <backColor value="Green" />
+    </mapping>
+    <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%date [%thread] %-5level %logger [%property{NDC}] - %message%newline" />
+    </layout>
+</appender>
+
+效果如下：
+
+
+
+ConsoleAppender 
+详情参考 log4net.Appender.ConsoleAppender SDK 文档。
+
+ConsoleAppender将日志信息输出到控制台标准输出流。
+
+<appender name="ConsoleAppender" type="log4net.Appender.ConsoleAppender" >
+    <layout type="log4net.Layout.PatternLayout">
+        <param name="ConversionPattern" value="%d [%t] %-5p %c [%x] - %m%n" />
+    </layout>
+</appender>
+
+EventLogAppender 
+详情参考 log4net.Appender.EventLogAppender SDK 文档。 
+
+EventLogAppender将日志写入本地机器的应用程序事件日志中。默认情况下，该日志的源（Source）是AppDomain.FriendlyName，也可以手动指定其它名称。 
+
+<appender name="EventLogAppender" type="log4net.Appender.EventLogAppender" >
+    <layout type="log4net.Layout.PatternLayout">
+        <param name="ConversionPattern" value="%d [%t] %-5p %c [%x] - %m%n" />
+    </layout>
+</appender>
+FileAppender
+
+详情参考 log4net.Appender.File Appender SDK 文档。 
+
+FileAppender将日志信息输出到指定的日志文件。
+
+<!--[if !vml]-->
+
+<appender name="LogFileAppender" type="log4net.Appender.FileAppender" >
+    <param name="File" value="WebUtilClient.log" />
+    <param name="AppendToFile" value="true" />
+    <layout type="log4net.Layout.PatternLayout">
+        <param name="ConversionPattern" value="%d [%t] %-5p %c [%x] - %m%n" />
+    </layout>
+</appender>
+
+File指定了文件名称，可以使用相对路径，此时日志文件的位置取决于项目的类型（如控制台、Windows Forms、ASP.NET等）；也可以使用绝对路径；甚至可以使用环境变量，如<file value="${TMP}/log-file.txt" />。
+AppendToFile指定是追加到还是覆盖掉已有的日志文件。
+还可以添加如下属性<lockingModel type="log4net.Appender.FileAppender+MinimalLock" />来使用最小锁定模型（minimal locking model），以允许多个进程可以写入同一个文件。
+ForwardingAppender 
+
+详情参考 log4net.Appender.ForwardingAppender SDK 文档。 
+
+ForwardingAppender可以用来为一个Appender指定一组约束。看下面这个示例：
+
+<appender name="ForwardingAppender" type="log4net.Appender.ForwardingAppender" >
+    <threshold value="WARN"/>
+    <appender-ref ref="ConsoleAppender" />
+</appender>
+
+在这个示例中，为ConsoleAppender添加了约束，Threshold为WARN。这意味着对于一条日志信息，如果直接使用ConsoleAppender，那么不论它是什么级别，总会进行输出，而如果使用这个ForwardingAppender，则只有那些WARN或WARN以上的日志才会发送到ConsoleAppender。 
+MemoryAppender
+
+详情参考 log4net.Appender.MemoryAppender SDK 文档。 
+
+似乎不应该使用配置文件来配置MemoryAppender，但如果你非要这么做，看看这个示例（未验证）：
+
+<appender name="MemoryAppender" type="log4net.Appender.MemoryAppender">
+    <onlyFixPartialEventData value="true" />
+</appender>
+
+NetSendAppender 
+详情参考 log4net.Appender.NetSendAppender SDK 文档。
+
+NetSendAppender向特定用户的屏幕发送消息（未验证）。
+
+<appender name="NetSendAppender" type="log4net.Appender.NetSendAppender">
+    <threshold value="ERROR" />
+    <server value="Anders" />
+    <recipient value="xym" />
+    <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%date [%thread] %-5level %logger [%property{NDC}] - %message%newline" />
+    </layout>
+</appender>
+
+OutputDebugStringAppender 
+
+详情参考 log4net.Appender.OutputDebugStringAppender SDK 文档。 
+下面这个例子描述了如何配置该Appender以向OutputDebugString API写入日志（未验证）。 
+
+ 
+
+<appender name="OutputDebugStringAppender" type="log4net.Appender.OutputDebugStringAppender" >
+    <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%date [%thread] %-5level %logger [%property{NDC}] - %message%newline" />
+    </layout>
+</appender>
+
+RemotingAppender
+详情参考 log4net.Appender.RemotingAppender SDK 文档。
+
+RemotingAppender向特定的Sink发送日志信息（未验证）：
+
+<!--[if !vml]-->
+
+<appender name="RemotingAppender" type="log4net.Appender.RemotingAppender" >
+    <sink value="tcp://localhost:8085/LoggingSink" />
+    <lossy value="false" />
+    <bufferSize value="95" />
+    <onlyFixPartialEventData value="true" />
+</appender>
+RollingFileAppender
+
+详情参考 log4net.Appender.RollingFileAppender SDK 文档。
+
+RollingFileAppender以FileAppender为基础，与后者有着相同的配置选项。
+
+下面这个例子演示了如何配置RollingFileAppender以写入log.txt文件。写入的文件名总是为log.txt（StaticLogFileName参数指定为true）；根据文件大小（RollingStyle）来生成新的文件；最多保存有10个文件（MaxSizeRollBackups属性，而且一旦写满10个文件，就不再写入日志了），每个文件最大为10KB。这些文件名称为log.txt.1, log.txt.2…等。
+
+<appender name="RollingFileAppender" type="log4net.Appender.RollingFileAppender">
+    <param name="File" value="log/Log.txt" />
+    <param name="AppendToFile" value="true" />
+    <param name="MaxSizeRollBackups" value="10" />
+    <param name="MaximumFileSize" value="5MB" />
+    <param name="RollingStyle" value="Size" />
+    <param name="StaticLogFileName" value="true" />
+    <layout type="log4net.Layout.PatternLayout">
+        <param name="ConversionPattern" value="%d [%t] %-5p %c [%x] - %m%n" />
+    </layout>
+</appender>
+
+SmtpAppender 
+
+详情参考 log4net.Appender.SmtpAppender SDK 文档。
+SmtpAppender通过Smtp邮件服务器发送日志信息：
+
+        <appender name="SmtpAppender" type="log4net.Appender.SmtpAppender">
+            <authentication value="Basic" />
+            <to value="anderscui@tom.com" />
+            <from value="anderscui@163.com" />
+            <username value="anderscui" />
+            <password value="password" />
+            <subject value="test logging message" />
+            <smtpHost value="smtp.163.com" />
+            <bufferSize value="512" />
+            <lossy value="true" />
+            <evaluator type="log4net.Core.LevelEvaluator">
+                <threshold value="WARN"/>
+            </evaluator>
+            <layout type="log4net.Layout.PatternLayout">
+                <conversionPattern value="%newline%date [%thread] %-5level %logger [%property{NDC}] - %message%newline%newline%newline" />
+            </layout>
+        </appender>
+
+将其中的to、from、username、password、subject、smtpHost配置正确才可能发送成功。bufferSize可将多条信息打包在一个邮件中。evaluator可以对日志进行过滤。
+SmtpPickupDirAppender
+
+详情参考 log4net.Appender.SmtpPickupDirAppender SDK 文档。
+
+配置与SmtpAppender类似，但要把SmtpHost换为PickupDir（未验证）。
+
+<appender name="SmtpPickupDirAppender" type="log4net.Appender.SmtpPickupDirAppender">
+    <to value="to@domain.com" />
+    <from value="from@domain.com" />
+    <subject value="test logging message" />
+    <pickupDir value="C:/SmtpPickup" />
+    <bufferSize value="512" />
+    <lossy value="true" />
+    <evaluator type="log4net.Core.LevelEvaluator">
+        <threshold value="WARN"/>
+    </evaluator>
+    <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%newline%date [%thread] %-5level %logger [%property{NDC}] - %message%newline%newline%newline" />
+    </layout>
+</appender>
+TraceAppender
+
+详情参考 log4net.Appender.TraceAppender SDK 文档。
+
+TraceAppender将日志信息写入System.Diagnostics.Trace系统（出现在输出窗口）。
+
+<appender name="TraceAppender" type="log4net.Appender.TraceAppender">
+    <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%date [%thread] %-5level %logger [%property{NDC}] - %message%newline" />
+    </layout>
+</appender>
+
+UdpAppender
+详情参考 log4net.Appender.UdpAppender SDK 文档。
+
+下例演示了如何配置UdpAppender(未验证)：
+
+<appender name="UdpAppender" type="log4net.Appender.UdpAppender">
+    <localPort value="8080" />
+    <remoteAddress value="224.0.0.1" />
+    <remotePort value="8080" />
+    <layout type="log4net.Layout.PatternLayout, log4net">
+        <conversionPattern value="%-5level %logger [%property{NDC}] - %message%newline" />
+    </layout>
+</appender>
+
+上面有若干个Appender标注为"未验证"的，是指这些Appender极少用到，或者在我的机器上没能实现 :(
+
+希望这些内容能对您有所帮助。
