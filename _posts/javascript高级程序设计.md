@@ -64,6 +64,14 @@ tags:
         - [5.3.2. Date.UTC()](#532-dateutc)
     - [5.4. RegExp类型](#54-regexp%E7%B1%BB%E5%9E%8B)
         - [5.4.1. RegExp 实例属性](#541-regexp-%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7)
+        - [5.4.2. RegExp 实例方法](#542-regexp-%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95)
+        - [5.4.3. RegExp 构造函数属性](#543-regexp-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%B1%9E%E6%80%A7)
+    - [5.5. Function类型](#55-function%E7%B1%BB%E5%9E%8B)
+        - [5.5.1. 函数声明与函数表达式](#551-%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E%E4%B8%8E%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+        - [5.5.2. 作为值的函数](#552-%E4%BD%9C%E4%B8%BA%E5%80%BC%E7%9A%84%E5%87%BD%E6%95%B0)
+        - [5.5.3. 函数内部属性](#553-%E5%87%BD%E6%95%B0%E5%86%85%E9%83%A8%E5%B1%9E%E6%80%A7)
+        - [函数的属性和方法](#%E5%87%BD%E6%95%B0%E7%9A%84%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95)
+    - [基本包装类型](#%E5%9F%BA%E6%9C%AC%E5%8C%85%E8%A3%85%E7%B1%BB%E5%9E%8B)
 - [6. 面向对象的程序设计](#6-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1)
 - [7. 函数表达式](#7-%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F)
 - [8. BOM](#8-bom)
@@ -636,6 +644,138 @@ var pattern = /\[bc\]at/i;
 ### 5.4.1. RegExp 实例属性
 
 每个实例都具有如下属性：
+
+- global: 布尔值,表示是否设置了g标志
+
+- ignoreCase: 布尔值，表示是否设置了i标志
+
+- lastIndex: 整数，表示开始搜索下一个匹配项的字符位置,从0算起。
+
+- mutiline: 布尔值，表示是否设置了m标志
+
+- source: 正则表达式的字符串表示,按照字面量形式而非传入构造函数中的字符串模式返回。
+
+### 5.4.2. RegExp 实例方法
+
+- exec(): 该方法是专门为捕获组而设计的。接受一个参数,即要应用模式的字符串。返回包含第一个匹配信息的数组，或者在没有匹配项的情况下返回null。
+  返回的数组是Array的实例，第一项是与整个模式匹配的字符串,其它项是与模式捕获组匹配的字符串(如果没有捕获组，则只包含一项），此外还包含两个额外的属性,index和input：
+  - index表示匹配项在字符串中的位置.
+  - inupt表示应用正则表达式的字符串。
+
+  在一个字符串上多次调用exec(),将始终返回第一个匹配项的信息.而在设置全局标志的情况下,每次调用exec()都会在字符串中继续查找新匹配项。
+
+- test():接收一个字符串参数,在模式与该参数匹配的情况下返回true,否则返回false.
+
+### 5.4.3. RegExp 构造函数属性
+
+| 长属性名     | 短属性名 | 说明                                     |
+| ------------ | -------- | ---------------------------------------- |
+| input        | $_       | 最近一次要匹配的字符串                   |
+| lastMatch    | $&       | 最近一次的匹配项                         |
+| lastParen    | $+       | 最近一次匹配的捕获组                     |
+| leftContext  | $`       | input字符串中lastMach之前的文本          |
+| mutiline     | $*       | 布尔值，表示是否所有表达式都使用多行模式 |
+| rightContext | $`       | input字符串中lastMach之后的文本          |
+
+
+除了上面的属性外，还有9个用于存储捕获组的构造函数属性。访问语法是 
+
+```javascript
+RegExp.$1、RegExp.$2
+```
+
+## 5.5. Function类型
+
+定义函数的三种方法
+
+- 声明语法
+
+```javascript
+function sum(num1,num2){
+    return num1+num2;
+}
+```
+
+- 函数表达式
+
+```javascript
+var sum = function(num1,num2){
+    return num1+num2;
+}
+```
+
+- Function构造函数(不推荐)
+
+```javascript
+var sum = new Function("num1","num2","return num1+num2");
+```
+
+使用不带圆括号的函数名访问的是函数指针，而非调用函数
+
+### 5.5.1. 函数声明与函数表达式
+
+解析器在向执行环境加载数据时，会率先读取函数声明，并使其在执行任何代码之前可用（可以访问）。至于函数表达式，则必须等到解析器执行到它所在的代码行，才会真正被解释执行。
+
+### 5.5.2. 作为值的函数
+
+```javascript
+function CreateComparisonFunction(propertyName){
+    return function(object1,object2){
+        var value1 = object1[propertyName];
+        var value2 = object2[propertyName];
+        if (value1<value2){
+            return -1;
+        }else if(value1 >value2){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+}
+
+//调用
+var data = {{name:"aaa",age:18},{name:"bbb",age:19}}
+data.sort(CreateComparisonFunction("name"));
+```
+
+### 5.5.3. 函数内部属性
+
+- callee属性：是一个指针，指向拥有这个arguments对象的函数。
+- this属性：引用的是函数据以执行的环境对象。
+- caller属性：保存着调用当前函数的函数的引用
+
+### 函数的属性和方法
+
+每个函数都包含两个属性：
+
+- length:表示函数希望接收的命名参数的个数。
+- prototype:对于引入类型而言，它们的所有实例方法均保存在prototype中，只不过通过各自对象的实例访问罢了。prototype属性是不可枚举的，因此使用for-in无法发现。
+
+每个函数都包含两个非继承而来的方法,apply()和call()。这两个方法都是在特定的作用域中调用函数。实际上等于设置函数体内this对象的值。
+
+- apply():接收两个参数，一个是在其中运行函数的作用域，另一个是参数数组。
+- call():接收两个参数，一个是在其中运行函数的作用域，另一个是参数，必须是一一列举的参数。
+
+它们真正强大的地方是能扩展函数赖以运行的作用域，扩充作用域的最大好处就是对象不需要与方法有任何耦合关系。
+
+- bind()方法
+
+这个方法会创建一个函数的实例，其this值会被绑定到传给bind()函数的值。
+
+```javascript
+window.color = "red";
+var o = {color:"blue"};
+function sayColor(){
+    alert(this.color);
+}
+var objectSayColor = sayColor.bind(0);
+objectSayColor();//blue
+```
+
+## 基本包装类型
+
+指三个特殊的引用类型:Boolean,Number,String.
+每当读取一个基本类型值的时候，后台会创建一个对应的基本包装类型对象。
 
 
 # 6. 面向对象的程序设计
