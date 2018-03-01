@@ -3,15 +3,12 @@ title: SourceTree使用
 date: 2018-01-05 12:55:38
 tags:
 ---
+
 # SourceTree的安装
-
    安装没什么好说，但安装之后需要登陆之后才能使用，这个登陆也不知道怎么搞的，总是失败，在网上查找了一些解决方法，跳过这个初始化步骤。当然如果你人品好，登陆正常，可以跳过此步。
-
-## 跳过初始化步骤
-
+### 跳过初始化步骤
 在目录 C:\Users\{youruser}\AppData\Local\Atlassian\SourceTree 下创建文件accounts.json
-
-```javascript
+```
 [
   {
     "$id": "1",
