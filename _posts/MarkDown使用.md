@@ -3,8 +3,9 @@ title: MarkDown使用
 date: 2018-02-25 16:18:47
 tags:
 ---
-# 特殊符号
-```
+# 1. 特殊符号
+
+```md
 符号  说明  对应编码(应用时去掉空格)   英文怎么说
 &   AND 符号  & amp;  ampersand
 <   小于  & lt;   little
@@ -73,7 +74,12 @@ tags:
 τ   tau & tau;  tau
 ```
 
-# 在VSCode中自动为markdown标题添加顺序
+# 增加链接
+
+[example link]https://xuzhongwang.github.io/
+
+# 2. 在VSCode中自动为markdown标题添加顺序
+
 安装markdown_index，运行 > markdown add index，即可自动添加序号
 安装方法：
 在vscode market搜索“markdown-index”即可安装
