@@ -7,6 +7,7 @@ tags: 学习笔记
 原文：http://www.cnblogs.com/wangfupeng1988/p/3994950.html
 
 # JavaScript判断对象是值类型还是引用类型的方法
+
 ```
 var fn = function () { };
 console.log(fn instanceof Object);  // true
