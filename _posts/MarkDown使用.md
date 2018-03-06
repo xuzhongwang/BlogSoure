@@ -5,7 +5,7 @@ tags:
 ---
 # 1. 特殊符号
 
-```md
+```C#
 符号  说明  对应编码(应用时去掉空格)   英文怎么说
 &   AND 符号  & amp;  ampersand
 <   小于  & lt;   little
