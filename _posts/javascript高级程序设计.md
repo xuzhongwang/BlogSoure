@@ -75,8 +75,12 @@ tags:
         - [5.6.1. Boolean 类型](#561-boolean-%E7%B1%BB%E5%9E%8B)
         - [5.6.2. Number 类型](#562-number-%E7%B1%BB%E5%9E%8B)
         - [5.6.3. String 类型](#563-string-%E7%B1%BB%E5%9E%8B)
-    - [单体内置对象](#%E5%8D%95%E4%BD%93%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1)
+    - [5.7. 单体内置对象](#57-%E5%8D%95%E4%BD%93%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1)
+        - [5.7.1. Global对象](#571-global%E5%AF%B9%E8%B1%A1)
+        - [5.7.2. Math对象](#572-math%E5%AF%B9%E8%B1%A1)
 - [6. 面向对象的程序设计](#6-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1)
+    - [理解对象](#%E7%90%86%E8%A7%A3%E5%AF%B9%E8%B1%A1)
+        - [属性类型](#%E5%B1%9E%E6%80%A7%E7%B1%BB%E5%9E%8B)
 - [7. 函数表达式](#7-%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F)
 - [8. BOM](#8-bom)
 - [9. 客户端检测](#9-%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A3%80%E6%B5%8B)
@@ -866,11 +870,108 @@ toLowerCase()、toLocalLowerCase()、toUpperCase()、toLocalUpperCase()
 
 String 构造函数本身的一个静态方法，这个方法接收一或多个字符编码，然后将他们转换为字符串。
 
-## 单体内置对象
+## 5.7. 单体内置对象
 
+内置对象的定义：由ECMAScript实现提供的、不依赖宿主环境的对象，这些对象在ECMAScript程序执行之前就已经存在了。
+开发人员不必显式地实例化内置对象，因为它们已经实例化过了。
+实例对象包括：Object、Array、String、Global、Math
 
+### 5.7.1. Global对象
+
+不属于任何其他对象的属性和方法，最终都是它的属性和方法。
+事实上没有全局变量和全局函数。所有在全局作用域中定义的属性和函数，都是Global对象的属性。
+诸如IsNaN()、IsFinite()、parseInt()以及parseFloat()实际上全都是Global对象的方法。
+除此之外，Global对象还包含其他的一些方法。
+
+1 URI编码方法
+
+Global 对象的 encodeURI() 和 encodeURIComponent() 方法可以对 URI 进行编码，以便发送给浏览器。其主要区别在于：
+encodeURI() 不会对本身属于 URI 的特殊字符进行编码，例如冒号、正斜杠、问号和井字号
+而encodeURIComponent() 则会对它发现的任何非标准字符进行编码。
+
+2 eval()方法
+
+大概是整个ECMAScript语言最强大的方法，就像是一个完整的ECMAScript解析器，它只接受一个参数，即要执行的ECMAScript字符串。
+在eval()中创建的任何变量或函数都不会被提升，因为在解析代码时，它们被包含在一个字符串中，它们只在eval()执行的时候创建。
+严格模式下，在外部访问不到eval()中创建的任何变量或函数。
+
+3 Global 对象的属性
+
+4 Window 对象
+
+### 5.7.2. Math对象
+
+1 Math对象的属性
+
+| 属性         | 说明                             |
+| ------------ | -------------------------------- |
+| Math.E       | 自然对数的底数，即常量e的值      |
+| Math.LN10    | 10的自然对数                     |
+| Math.LN2     | 2的自然对数                      |
+| Math.LOG2E   | 以2为底e的对数                   |
+| Math.LOG10E  | 以10为底e的对数                  |
+| Math.PI      | π的值                            |
+| Math.SQRT1_2 | 1/2的平方根（即2的平方根的倒数） |
+| Math.SQRT2   | 2的平方根                        |
+
+2 Min()和Max()方法
+用于确定一组数值中的最小值和最大值。
+
+要找到数组中的最大值和最小值，可以像下面那样调用apply()方法。
+
+```javascript
+var values = [1,2,3,4,5];
+var max = Math.max.apply(Math,values);
+```
+
+3 舍入方法
+
+- Math.ceil()执行向上舍入，即它总上将数值向上传入最接近的整数。
+- Math.floor()执行向下舍入。
+- Math.round()执行标准舍入。
+
+4 random()方法
+
+Math.random()方法返回介于0和1之间的一个随机数，不包括0和1.
+在某个整数范围内随机可以套用下面的公式：
+
+```javascript
+值=Math.floor(Math.random()*可能值的总数+第一个可能值)
+```
+
+5 其它方法
+
+| 方法                | 说明                |
+| ------------------- | ------------------- |
+| Math.abs(num)       | 返回绝对值          |
+| Math.exp(num)       | 返回Math.E的num次幂 |
+| Math.log(num)       | 返回num的自然对数   |
+| Math.pow(num,power) | 返回num的power次幂  |
+| Math.sqrt(num)      | 返回num的平方根     |
+| Math.acos(x)        | 返回x的反余弦值     |
+| Math.asinx)         | 返回x的反正弦值     |
+| Math.atan(x)        | 返回x的反正切值     |
+| Math.atan2(y,x)     | 返回y/x的反正切值   |
+| Math.cos(x)         | 返回x的余弦值       |
+| Math.sinx)          | 返回x的正弦值       |
+| Math.tan(x)         | 返回x的正切值       |
 
 # 6. 面向对象的程序设计
+
+ECMA-262 把对象定义为：无序属性的集合,其属性可以包含基本值、对象或者函数.
+可以把ECMAScript的对象想像成散列表，无非就是一组名值对，其中值可以是数据或函数。
+
+## 理解对象
+
+### 属性类型
+
+有两种属性：数据属性和访问器属性
+
+1 数据属性
+
+数据属性可以包含一个数据值的位置。在这个位置可以读取和写入值。数据属性有4个可以描述其行为的特性。
+
+- [[Configurable]]:表示能否通过delete删除属性从而重新定义属性。
 
 # 7. 函数表达式
 

@@ -4,6 +4,7 @@ date: 2018-02-07 10:38:52
 tags:
 ---
 # CommandFlags
+
 枚举值|描述
 ActionMacro|可以用动作录制器录制命令动作；
 DocReadLock|命令执行时将被只读锁定；
