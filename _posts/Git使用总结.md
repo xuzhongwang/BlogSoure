@@ -44,3 +44,24 @@ clip < ~/.ssh/id_rsa.pub
 git config --global user.name "liuxianan"// 你的github用户名，非昵称
 git config --global user.email  "xxx@qq.com"// 填写你的github注册邮箱
 ```
+
+# Git增加dll文件
+
+## 单独仓库
+
+Git默认忽略dll文件，可添加如下代码取消忽略
+
+```bash
+## Include .dll files in perfect folder
+# User-specific files
+!*.dll
+# Re-instate the build folder that is excluded in the default .gitignore
+# This folder is used by Microsoft.Bcl.Build.* package
+!build/
+```
+## 全局
+
+```bash
+C:\Users\Administrator\Documents\gitignore_global.txt
+```
+的配置文件中删除*.dll
