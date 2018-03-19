@@ -19,19 +19,19 @@ tags:
     Git 2.15.0.windows.1
     Hexo 3.4.4
 
-# 工具的安装
-## NodeJs安装
+# 1. 工具的安装
+## 1.1. NodeJs安装
    在官网下载最新的安装包，按引导一步步安装。
-## Git安装
+## 1.2. Git安装
    按引导至安装完成。
-## Hexo安装及配置
-### Hexo安装
+## 1.3. Hexo安装及配置
+### 1.3.1. Hexo安装
    打开命令行，找到刚才NodeJs的安装目录，输入如下指令
    ```
    npm install hexo-cli -g
    ```
    ![install hexo](GitHub博客部署/install hexo.png)
-### Hexo初始化配置
+### 1.3.2. Hexo初始化配置
 1. 配置博客目录
     在命令行中进入你要放置博客的路径，执行如下命令，会创建一个Blog的文件夹，并时行一些组件的安装。
    ```
@@ -46,11 +46,11 @@ tags:
    ```
   ![hexo server](GitHub博客部署/hexo server.png)
 
-## 发布到github
-### 注册github
+## 1.4. 发布到github
+### 1.4.1. 注册github
 注册过程不多说，注册完成后，按照如下页面所示设置GitHub Pages https://pages.github.com/
 
-### SSH key配置
+### 1.4.2. SSH key配置
 ```
 $ cd ~/. ssh #检查本机已存在的ssh密钥
 ```
@@ -67,7 +67,7 @@ $ git config --global user.name "liuxianan"// 你的github用户名，非昵称
 $ git config --global user.email  "xxx@qq.com"// 填写你的github注册邮箱
 ```
 
-### 上传插件安装
+### 1.4.3. 上传插件安装
 ```
     npm install hexo-deployer-git –save
 ```
@@ -77,7 +77,7 @@ $ git config --global user.email  "xxx@qq.com"// 填写你的github注册邮箱
 
 工具都安装完成后，就可以写博客了
 
-## hexo常用命令 
+## 1.5. hexo常用命令
 ``` 
 hexo new "postName" #新建文章
 hexo new page "pageName" #新建页面
