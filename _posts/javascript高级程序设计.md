@@ -1067,7 +1067,24 @@ Person.prototype ={
 
 创建自定义类型的最常见方式，就是组合使用构造函数模式与原型模式.构造函数模式用于定义实例属性，而原型模式用于定义方法和共享属性。
 
+### 动态原型模式
 
+通过检查某个是否应该存在的方法是否有效，来决定是否需要初始化原型。
+
+```javascript
+function Person(name,age,job){
+    //属性
+    this.name = name;
+    this.age= age;
+    this.job = job;
+    //方法
+    if(typeof this.sayName != "function"){
+        Person.prototype.sayName = function(){
+            alert(this.name);
+        }
+    }
+}
+```
 
 # 7. 函数表达式
 
