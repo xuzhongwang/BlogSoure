@@ -1091,7 +1091,7 @@ friend.sayName();
 
 上面代码只在 sayName() 方法不存在的情况下，才会将它添加到原型中。这段代码只会在初次调用构造函数时才会执行。此后，原型已经完成初始化，不需要再做什么修改了。这里对原型所做的修改，能够立即在所有实例中得到反映。因此，这种方法可以说非常完美。其中，if语句检查的可以是初始化之后应该存在的任何属性或方法————不必用一大堆if语句检查每个属性和每个方法，只要检查其中一个即可。对于采用这种模式创建的对象，还可以使用instanceof 操作符确定它的类型。
 
-### 寄生构造函数模式
+### 6.2.6. 寄生构造函数模式
 
 基本思想是创建一个函数，该函数的作用仅仅是封装创建对象的代码，然后再返回新创建的对象。
 这个模式可以在特殊情况下用来为对象创建构造函数。假设我们想创建一个具有额外方法的特殊数组。由于不能直接修改 Array 构造函数，因此可以使用这个模式。
@@ -1114,21 +1114,169 @@ alert(colors.toPipedString());//"red|blue|green"
 
 ```
 
-### 稳妥构造函数模式
+### 6.2.7. 稳妥构造函数模式
 
 稳妥对象： 没有公共属性，而且其方法也不引用this的对象。
 
-## 继承
+## 6.3. 继承
 
 ECMAScript只支持实现继承，而且其实现继承主要是依靠原型链来实现的。
 
-### 原型链
+### 6.3.1. 原型链
 
 其基本思想是利用原型让一个引用类型继承另一个引用类型的属性和方法。
 
 ![原型链继承](javascript高级程序设计\原型链继承.png)
 
+原型与实例关系的两种方式
+
+- 使用 instanceof 操作符：只要用这个操作符来测试实例与原型链中出现过的构造函数，结果就会返回 true
+- 使用 isPrototypeOf() 方法：只要是原型链中出现过的原型，都可以说是该原型链所派生的实例的原型，结果会返回 true
+
+注意：使用原型链实现继承时，不能使用字面量创建原型方法。
+
+原型链的问题：
+- 最主要的问题来自包含引用类型值的原型。
+- 在创建子类型的实例时，不能向超类型的构造函数中传递参数。
+
+### 6.3.2. 借用构造函数
+
+目的：为解决原型中包含引用类型值所带来的问题（也叫伪造对象或经典继承）
+基本思想：在子类型构造函数的内部调用超类型构造函数
+
+```javascript
+function SuperType(){
+    this.colors = ["red","blue","green"];
+}
+
+function SubType(){
+    //继承了 SuperType
+    SuperType.call(this);
+}
+
+var instance1 = new SubType();
+instance1.colors.push("black");
+alert(instance1.colors); //"red,blue,green,black"
+
+var instance2 = new SubType();
+alert(instance2.colors); //"red,blue,green"
+```
+
+借用构造函数的问题：也将无法避免构造函数模式存在的问题————方法都在构造函数中定义，因此复用就无从谈起了。
+
+### 6.3.3. 组合继承
+
+也叫伪经典继承，指的是将原型链与借用构造函数的技术组合到一块。背后的思想是，使用原型链实现对原型属性和方法的继承，而通过借用构造函数来实现对实例属性的继承。这样，既通过在原型上定义方法实现了函数的复用，又能保证每个实例都有它自己的属性。
+
+```javascript
+function SuperType(name){
+    this.name= name;
+    this.colors = ["red","blue","green"];
+}
+
+SuperType.prototype.sayName = function(){
+    alert(this.name);
+}
+
+function SubType(name,age){
+    //继承属性
+    SuperType.call(this,name);
+    this.age = age;
+}
+//继承方法
+SubType.prototype = new SuperType();
+
+SubType.prototype.sayAge = function(){
+    alert(this.age);
+}
+
+var instance1 = new SubType("N",29);
+instance1.colors.push("black");
+alert(instance1.colors);  //"red,blue,green,black"
+instance1.sayName();//"N"
+instance1.sayAge();//29
+
+var instance2 = new SubType("G",27);
+alert(instance2.colors);  //"red,blue,green,black"
+instance2.sayName();//"G"
+instance2.sayAge();//27
+```
+
+组合继承避免了原型链与借用构造函数的缺陷，融合了它们的优点，成为 JavaScript 中最常用的继承模式。而且， instanceof 和 isPrototypeOf() 也能识别用于识别基于组合继承创建的对象。
+
 # 7. 函数表达式
+
+## 7.1. 递归
+
+关于函数声明，它的一个重要特征就是函数声明提升(function declaration hoisting).意思是在执行代码之前会先读取函数声明。
+
+```javascript
+var factorial = (function f(num)){
+    if(num <= 1){
+        return 1;
+    }else{
+        return num * f(num -1);
+    }
+}
+```
+以上方法在严格模式与非严格模式下都行的通。
+
+## 闭包
+
+闭包是指有权访问另一个函数作用域中的变量的函数。创建闭包的常见方式，就是在一个函数内部创建另一个函数。
+
+```javascript
+function createComparisionFunction(propertyName){
+    return fucntion(object1,object2){
+        var value1 = object1[propertyName];
+        var value2 = object2[propertyName];
+
+        if(value1<value2){
+            return -1;
+        }else if(value1>value2){
+            return 1;
+        }else{
+            return 0;
+        }
+    };
+}
+```
+
+函数第一次被调用的时候发生了什么：
+当某个函数第一次被调用时，会创建一个执行环境及相应的作用域链，并把作用域链赋值给一个特殊的内部属性（即[[Scope]])。然后，使用 this,arguments 和其它命名参数的值来初始化函数的活动对象。但在作用域链中，外部函数的活动对象始终处于第二位，外部函数的外部函数的活动对象处于第三位··· 直至作为作用域链终点的全局执行环境。
+
+### 内存泄漏
+
+```javascript
+function assignHandler(){
+    var element = document.getElementById("someElement");
+    var id = element.Id;
+
+    element.onclick = function(){
+        alert(id);
+    }
+    element = null;
+}
+```
+
+切记：
+闭包会引用包含函数的整个活动对象，而其中包含着 element. 即使闭包不直接引用 element，包含函数的活动对象中也仍然会保存一个引用。因此，有必要把 element 变量设置为 null。这样就能够解除对 Dom 对象的引用，顺利地减少其引用数，确保正常回收其占用的内存。
+
+## 模仿块级作用域
+
+匿名函数模仿块级作用域（私有作用域）
+
+```javascript
+(function(){
+    //这里是块级作用域
+})();
+```
+
+## 私有变量
+
+任何在函数中定义的变量，都可以认为是私有变量，因为不能在函数外部访问这些变量。
+
+
 
 # 8. BOM
 
