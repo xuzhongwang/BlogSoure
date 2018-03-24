@@ -26,3 +26,8 @@ gacutil -i Microsoft.VisualStudio.Shell.Interop.11.0.dll
 ![Add Succeed](Visual-Studio-2017无法添加引用\Add Succeed.png)
 完成后重启Visual Studio，查看问题是否解决
 
+## resharper
+
+在线服务器
+http://idea.iteblog.com/key.php
+http://xidea.online

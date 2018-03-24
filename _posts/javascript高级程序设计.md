@@ -1221,7 +1221,7 @@ var factorial = (function f(num)){
 ```
 以上方法在严格模式与非严格模式下都行的通。
 
-## 闭包
+## 7.2. 闭包
 
 闭包是指有权访问另一个函数作用域中的变量的函数。创建闭包的常见方式，就是在一个函数内部创建另一个函数。
 
@@ -1245,7 +1245,7 @@ function createComparisionFunction(propertyName){
 函数第一次被调用的时候发生了什么：
 当某个函数第一次被调用时，会创建一个执行环境及相应的作用域链，并把作用域链赋值给一个特殊的内部属性（即[[Scope]])。然后，使用 this,arguments 和其它命名参数的值来初始化函数的活动对象。但在作用域链中，外部函数的活动对象始终处于第二位，外部函数的外部函数的活动对象处于第三位··· 直至作为作用域链终点的全局执行环境。
 
-### 内存泄漏
+### 7.2.1. 内存泄漏
 
 ```javascript
 function assignHandler(){
@@ -1262,7 +1262,7 @@ function assignHandler(){
 切记：
 闭包会引用包含函数的整个活动对象，而其中包含着 element. 即使闭包不直接引用 element，包含函数的活动对象中也仍然会保存一个引用。因此，有必要把 element 变量设置为 null。这样就能够解除对 Dom 对象的引用，顺利地减少其引用数，确保正常回收其占用的内存。
 
-## 模仿块级作用域
+## 7.3. 模仿块级作用域
 
 匿名函数模仿块级作用域（私有作用域）
 
@@ -1272,9 +1272,89 @@ function assignHandler(){
 })();
 ```
 
-## 私有变量
+## 7.4. 私有变量
 
 任何在函数中定义的变量，都可以认为是私有变量，因为不能在函数外部访问这些变量。
+
+特权方法：有权访问私有变量和私有函数的公有方法。有两种创建方式
+
+- 在构造函数中定义特权方法
+
+```javascript
+function MyObject(){
+    //私有变量和私有函数
+    var privateVariable = 10;
+    function privateFunction(){
+        return false;
+    }
+    //特权方法
+    this.publicMethod = function(){
+        privateVariable++;
+        return privateFunction();
+    }
+}
+```
+
+在构造函数中定义特权方法有一个缺点：必须使用构造函数模式来达到这个目的。
+
+### 静态私有变量
+
+```javascript
+(function(){
+    //私有变量和私有函数
+    var privateVariable = 10;
+    function privateFunction(){
+        return false;
+    }
+
+    //构造函数
+    MyObject = function(){
+
+    };
+    //公有、特权方法
+    MyObject.prototye.publicMethod = function(){
+        privateVariable++;
+        return privateFunction();
+    }
+})();
+```
+这个模式与在构造函数中定义特权方法的主要区别：
+在于私有变量和函数是由实例共享的。
+
+### 模块模式
+
+模块模式是为单例创建私有变量和特权方法。
+
+```javascript
+var singleton  = {
+    name : value,
+    method : function(){
+        //这里是方法的代码
+    }
+}
+```
+
+模块模式
+```javascript
+var singleton = function(){
+    //私有变量和私有函数
+    var privateVariable = 10;
+
+    function privateFunction(){
+        return false;
+    }
+
+    //特权/公有方法和属性
+    return {
+        publicProperty: true,
+        publicMethod:functio(){
+            privateVariable++;
+            return privateFunction();
+        }
+    }
+}
+```
+这种模式在需要对单例进行某些初始化，同时又需要维护其私有变量时是非常有用的。
 
 
 
