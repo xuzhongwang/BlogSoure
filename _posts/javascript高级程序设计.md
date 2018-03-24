@@ -1356,9 +1356,48 @@ var singleton = function(){
 ```
 这种模式在需要对单例进行某些初始化，同时又需要维护其私有变量时是非常有用的。
 
+在 Web 应用程序中，经常需要使用一个单例来管理应用程序级的信息。
 
+如果必须创建一个对象并以某些数据对其进行初始化，同时还要公开一些能够这些私有数据的方法，那么就可以使用模块模式。
 
+### 增强的模块模式
+
+在返回对象之前加入对其增强的代码。这种增强的模块模式适合那些单例必须是某种类型的实例，同时还必须添加某些属性和方法对其加以增强的情况。
+
+```javascript
+var singleton = function(){
+    //私有变量和私有函数
+    var privateVariable = 10;
+
+    function privateFunction(){
+        return false;
+    }
+
+    //创建对象
+    var object = new CustomType();
+    //添加特权/公有方法和属性
+    object.publicProperty = function(){
+        privateVariable++;
+        return privateFunction();
+    }
+
+    //返回这个对象
+    return object;
+}();
+```
 # 8. BOM
+
+## window 对象
+
+BOM 的核心是 window，它表示浏览器的一个实例。它既是通过 JavaScript 访问浏览器的一个接口，又是 ECMAScript 规定的一个 Global 对象。这意味着在网页中定义的任何一个对象、变量和函数，都以 window 作为其 Global 对象。
+
+### 全局作用域
+
+定义全局变量与在 window 对象上直接定义属性还是有一点差别。全局变量不能通过 delete 操作符删除,而直接在 window 对象上定义的属性可以。
+
+### 窗口关系及框架
+
+如果页面中包含框架，则每个框架都拥有自己的 window 对象，并且保存在 frames 集合中。可以通过数值索引（从0开始，从左到右，从上到下）或者框架名称来访问相应的 window 对象。
 
 # 9. 客户端检测
 
