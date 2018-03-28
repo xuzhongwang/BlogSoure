@@ -1399,6 +1399,22 @@ BOM 的核心是 window，它表示浏览器的一个实例。它既是通过 Ja
 
 如果页面中包含框架，则每个框架都拥有自己的 window 对象，并且保存在 frames 集合中。可以通过数值索引（从0开始，从左到右，从上到下）或者框架名称来访问相应的 window 对象。
 
+top 对象始终指向最高(最外)层的框架，也就是浏览器窗口。
+对于在一个框架中编写的任何代码来说，其中的 window 对象指向的都是那个框架的特定实例，而非最高层框架。
+
+parent对象，始终指向当前框架的直接上层对象。
+self对象，始终指向window.实际上 self 对象和 window 可以互换使用。
+
+### 窗口位置
+
+scrrenLeft 和 screenTop 属性，分别用于表示窗口相对于屏幕左边和上边的位置。
+跨浏览器取得窗口左边和上边的位置
+
+```javascript
+var leftPos = (typeof window.screenLeft == "number")?window.screenLeft:window.screenX;
+var topPos = (typeof window.screenTop == "number")?window.screenTop:window.screenY;
+```
+
 # 9. 客户端检测
 
 # 10. DOM
