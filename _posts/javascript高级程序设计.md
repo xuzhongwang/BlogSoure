@@ -1297,7 +1297,7 @@ function MyObject(){
 
 在构造函数中定义特权方法有一个缺点：必须使用构造函数模式来达到这个目的。
 
-### 静态私有变量
+### 7.4.1. 静态私有变量
 
 ```javascript
 (function(){
@@ -1321,7 +1321,7 @@ function MyObject(){
 这个模式与在构造函数中定义特权方法的主要区别：
 在于私有变量和函数是由实例共享的。
 
-### 模块模式
+### 7.4.2. 模块模式
 
 模块模式是为单例创建私有变量和特权方法。
 
@@ -1360,7 +1360,7 @@ var singleton = function(){
 
 如果必须创建一个对象并以某些数据对其进行初始化，同时还要公开一些能够这些私有数据的方法，那么就可以使用模块模式。
 
-### 增强的模块模式
+### 7.4.3. 增强的模块模式
 
 在返回对象之前加入对其增强的代码。这种增强的模块模式适合那些单例必须是某种类型的实例，同时还必须添加某些属性和方法对其加以增强的情况。
 
@@ -1387,15 +1387,15 @@ var singleton = function(){
 ```
 # 8. BOM
 
-## window 对象
+## 8.1. window 对象
 
 BOM 的核心是 window，它表示浏览器的一个实例。它既是通过 JavaScript 访问浏览器的一个接口，又是 ECMAScript 规定的一个 Global 对象。这意味着在网页中定义的任何一个对象、变量和函数，都以 window 作为其 Global 对象。
 
-### 全局作用域
+### 8.1.1. 全局作用域
 
 定义全局变量与在 window 对象上直接定义属性还是有一点差别。全局变量不能通过 delete 操作符删除,而直接在 window 对象上定义的属性可以。
 
-### 窗口关系及框架
+### 8.1.2. 窗口关系及框架
 
 如果页面中包含框架，则每个框架都拥有自己的 window 对象，并且保存在 frames 集合中。可以通过数值索引（从0开始，从左到右，从上到下）或者框架名称来访问相应的 window 对象。
 
@@ -1405,7 +1405,7 @@ top 对象始终指向最高(最外)层的框架，也就是浏览器窗口。
 parent对象，始终指向当前框架的直接上层对象。
 self对象，始终指向window.实际上 self 对象和 window 可以互换使用。
 
-### 窗口位置
+### 8.1.3. 窗口位置
 
 scrrenLeft 和 screenTop 属性，分别用于表示窗口相对于屏幕左边和上边的位置。
 跨浏览器取得窗口左边和上边的位置
@@ -1415,6 +1415,54 @@ var leftPos = (typeof window.screenLeft == "number")?window.screenLeft:window.sc
 var topPos = (typeof window.screenTop == "number")?window.screenTop:window.screenY;
 ```
 
+### 8.1.4. 窗口大小
+
+使用 resizeTo 和 resizeBy() 方法可以调整浏览器窗口的大小。这两个方法都接收两个参数，其中 resizeTo() 接收浏览器窗口新宽度和新高度，而 resizeBy() 接收新窗口与原窗口的宽度和高度差。
+
+
+### 8.1.5. 导航和打开窗口
+
+window.open() 方法既可以导航到一个特定的 URL，也可以打开一个新的浏览器窗口。接收4个参数
+- 要加载的 URL
+- 窗口目标。
+    - 如果传递此参数，而且该参数已有窗口或框架的名称，那么就会在具有该名称的窗口或框架中加载第一个参数指定的 URL
+    - 如果该参数并不是一个已经存在的窗口或框架，那么该方法就会根据在第三个参数位置上传入的字符串创建一个新窗口或者标签页，如果没有传入第三个参数，那么就会打开一个带有全部默认设置（工具栏、地址栏和状态栏等）的新浏览器窗口。
+- 一个特性字符串
+- 一个表示新页面是否取代浏览器历史记录中当前加载页面的布尔值
+
+### 8.1.6. 间歇调用和超时调用
+
+JavaScript 是单线程语言。
+超时调用需要使用 window 对象的 setTimeOut() 方法，它接受两个参数：要执行的代码和以毫秒表示的时间。
+调用 setTimeOut() 之后，该方法会返回一个数值 ID,表示超时调用。这个超时调用 ID 是计划执行代码的唯一标识，可以通过它来取消超时调用。
+
+```javascript
+//设置超时调用
+var timeOutId = setTimeout(function(){
+    alert("Hello World");
+},1000);
+//取消
+clearTimeout(timeOutId);
+```
+
+间歇调用与超时调用类似，只不过它会按照指定的时间间隔重复执行代码，直至间歇调用被取消或者被页面卸载。设置间歇调用的方法是 setInterval().
+
+### 8.1.7. 系统对话框
+
+alert()、confirm()、prompt() 方法可以调用系统对话框向用户显示消息。
+
+## 8.2. location 对象
+
+location 是最有用的 BOM 对象之一，它提供了与当前窗口中加载的文档相关的信息，还提供了一些导航功能。
+location 既是 window 对象的属性，也是 document 对象的属性。换句话说，window.location 和 document.location 引用的是同一个对象。
+
+### 8.2.1. 位置操作
+
+assign()方法：
+
+```javascript
+location.assign("url");
+```
 # 9. 客户端检测
 
 # 10. DOM
@@ -1424,6 +1472,105 @@ var topPos = (typeof window.screenTop == "number")?window.screenTop:window.scree
 # 12. DOM的DOM
 
 # 13. 事件
+
+## 13.1. 事件流
+
+事件流描述的是从页面中接收事件顺序。
+
+### 13.1.1. 事件冒泡
+
+IE的事件流叫做事件冒泡，即事件最开始时由最具体的元素（文档中嵌套层次最深的那个节点）接收，然后逐级向上传播到较为不具体的节点(文档).
+
+### 13.1.2. 事件捕获
+
+思想是不太具体的节点应该更早接收到事件，而最具体的节点应该最后接收到事件。事件捕获的用意在于在事件到达预定目标前捕获它。
+
+### 13.1.3. DOM事件流
+
+“DOM2 级事件" 规定的事件流包括三个阶段：
+- 事件捕获阶段
+- 处于目标阶段
+- 冒泡阶段
+
+## 13.2. 事件处理程序
+
+响应某个事件的函数叫做事件处理程序或事件侦听器。
+
+### 13.2.1. HTML 事件处理程序
+
+```html
+<script type = "text/javascript">
+    function showMessage(){
+        alert("Hello World");
+    }
+</script>
+<input type = "button" value = "click me" onclick="showMessage()" ></input>
+```
+
+这样指定处理程序，首先会创建一个封装着元素属性值的函数，这个函数有一个局部变量 event，也就是事件对象。
+通过 event 对象可以直接访问事件对象。在这个函数内部， this 值等于事件的目标元素。
+在这个函数内部，可以像访问局部变量一样访问 document 及元素本身成员，这个函数使用 with 像下面这样扩展作用域：
+
+```javascript
+fucntion(){
+    with(document){
+        with(this){
+            //元素属性值
+        }
+    }
+}
+```
+如果当前元素是一个表单输入元素
+
+```javascript
+fucntion(){
+    with(document){
+        with(this.form){
+            with(this){
+                //元素属性值
+            }
+        }
+    }
+}
+```
+
+这样扩展作用域的方式，无非是想让事件处理程序无需引用表单元素就能访问其它表单字段。
+
+```javascript
+<form method = "post">
+    <input type = "text" name = "username" value = ""></input>
+    <input type = "button"  value = "erwq" onclick = "alert(username.value)"></input>
+</form>
+```
+
+在HTML指定事件处理程序的两个缺点
+
+- 时差问题：用户可能会在 HTML 元素一出现在页面上就触发相应的事件，但当时的事件处理程序有可能尚未具备执行条件。
+- 扩展程序的作用域链在不同的浏览器中会导致不同的结果。
+
+### DOM0 级事件处理程序
+
+优点：简单，跨浏览器
+
+### DOM2 级事件处理程序
+
+DOM2 级事件定义了两个方法，用于指定和删除事件处理程序的操作 addEventListener() 和 removeEventListener()。
+所有的 DOM 节点中都包含这两个方法，并且都接受3个参数。
+- 要处理的事件名
+- 作为事件处理程序的函数
+- 一个布尔值，如果为 true 表示在捕获阶段调用事件处理程序，如果是 false ，表示在冒泡阶段调用事件处理程序
+
+```javascript
+var btn = document.getElementById("myBtn");
+btn.addEventListener("click",function(){
+    alert(this.id);
+},false);
+```
+使用 DOM2 级方法添加事件处理程序的主要好处是可以添加多个事件处理程序。
+通过 addEventListner() 添加的事件处理程序只能使用 removeEventListener() 来移除。移除时传入的参数与添加处理程序时使用的参数相同。也就意味着通过 addEventListner() 添加的匿名函数将无法移除。
+
+### IE 事件处理程序
+
 
 # 14. 表单脚本
 
