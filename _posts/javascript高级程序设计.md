@@ -469,14 +469,17 @@ function compare(value1,value2){
 5个迭代方法都会对数组中的每一项运行指定函数，区别如下：
 
 - every():如果函数对每一项都返回ture，则返回true，(&&)
-
 - filter():返回运行指定函数返回true的项的数组。
-
 - forEach():无返回值
-
 - map():返回每次函数调用的结果组成的数组。
-
 - some():如果该函数对任意一项返回ture，则返回ture,(||)
+
+```javascript
+var numbers = [1,2,3,4,5,6,7,8,9,0];
+var result = numbers.every(function(item,index,array){
+    return (item>2);
+})
+```
 
 ### 5.2.8. 缩小方法
 
@@ -1548,11 +1551,11 @@ fucntion(){
 - 时差问题：用户可能会在 HTML 元素一出现在页面上就触发相应的事件，但当时的事件处理程序有可能尚未具备执行条件。
 - 扩展程序的作用域链在不同的浏览器中会导致不同的结果。
 
-### DOM0 级事件处理程序
+### 13.2.2. DOM级事件处理程序
 
 优点：简单，跨浏览器
 
-### DOM2 级事件处理程序
+### 13.2.3. DOM级事件处理程序
 
 DOM2 级事件定义了两个方法，用于指定和删除事件处理程序的操作 addEventListener() 和 removeEventListener()。
 所有的 DOM 节点中都包含这两个方法，并且都接受3个参数。
@@ -1569,7 +1572,41 @@ btn.addEventListener("click",function(){
 使用 DOM2 级方法添加事件处理程序的主要好处是可以添加多个事件处理程序。
 通过 addEventListner() 添加的事件处理程序只能使用 removeEventListener() 来移除。移除时传入的参数与添加处理程序时使用的参数相同。也就意味着通过 addEventListner() 添加的匿名函数将无法移除。
 
-### IE 事件处理程序
+### 13.2.4. IE 事件处理程序
+
+IE 实现了与 DOM 中类似的两个方法，attachEvent() 和 detachEvent()。这两个方法接收两个参数：事件处理程序名称和事件处理程序函数。
+在 IE中使用 attachEvent() 与使用 DOM0 级方法的主要区别在于事件处理程序的作用域。使用 DOM0 级方法的情况下，事件处理程序会在其所属元素的作用域内运行。在使用 attachEvent() 方法的情况下，事件处理程序会在全局作用域中运行，因此 this 等于 window。
+
+### 跨浏览器的事件处理程序 
+
+```javasccript
+var EventUtil = {
+    addHandler : function(element,type,handler){
+        if(element.addEventListener){
+            element.addEventListener(type,handler,false);
+        }else if(element.attachEvent){
+            element.attachEvent("on" + type,handler);
+        }else{
+            element["on"+type] = handler;
+        }
+    },
+    removeHandler:function(element,type,handler){
+         if(element.removeEventListener){
+            element.removeEventListener(type,handler,false);
+        }else if(element.detachEvent){
+            element.detachEvent("on" + type,handler);
+        }else{
+            element["on"+type] = null;
+        }
+    }
+}
+```
+
+## 事件对象
+
+### DOM 中的事件对象
+
+兼容 DOM 的浏览器会将一个 event 对象传入到事件处理程序中。
 
 
 # 14. 表单脚本
