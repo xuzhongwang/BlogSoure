@@ -1664,7 +1664,56 @@ var isSupported = document.implementation.hasFeature("FocusEvent","3.0");
 
 DOM3 级事件中定义了9个鼠标事件
 
-- click:
+- click:在用户单击主鼠标按钮或者按下回车键时触发。
+- dblclick:在用户双击主鼠标键时触发。
+- mousedown:在用户按下任意鼠标键时触发。不能通过键盘触发这个事件。
+- mouseenter:在鼠标光标从元素外部首次移动到元素范围内时触发。这个事件不冒泡，而且在光标移动到后代元素上不会触发。
+- mouseleave:在位于元素上方的鼠标光标移动到元素范围之外时触发。这个事件不冒泡，而且在光标移动到后代元素上不会触发。
+- mousemove:当鼠标指针在元素内部移动时重复触发。不能通过键盘触发这个事件。
+- mouseout:当鼠标指针位于一个元素上方，然后用户将其移入另一个元素时触发。又移入的另一个元素可能位于前一个元素的外部，也可能是这个元素的子元素。不能通过键盘触发这个事件。
+- mouseover:在鼠标指针位于一个元素外部然后用户将其首次移入另一个元素边界之内时触发。不能通过键盘触发这个事件。
+- mouseup:在用户释放鼠标按钮时触发，不能通过键盘触发这个事件。
+
+在页面上所有元素都支持鼠标事件。除了 mouseenter 和 mouseleave，所有鼠标都会冒泡，也可以被取消，而取消鼠标事件将会影响浏览器的默认行为。
+只有在同一个元素上相继触发 mousedown 和 mouseup 事件，才会触发 click 事件。
+事件触发的顺序如下：
+
+- mousedown
+- mouseup
+- click
+- mousedown
+- mouseup
+- click
+- dbclick
+
+1. 客户区坐标位置
+鼠标事件都是在浏览器视口中的特定位置上发生的。这个位置信息保存在事件对象的 clientX 和 clientY 属性中。所有浏览器都支持这两个属性，它们的值表示事件发生时鼠标指针在视口中的水平和垂直坐标。
+可以使用类似下列代码取得鼠标事件的客户端坐标信息。
+
+```javascript
+var div = document.getElementById("myDiv");
+EventUtil.AddHandler(div,"click",function(event){
+    event = EventUtil.getEvent(event);
+    alert("Client coordinates:" + event.clientX + "," + event.clientY);
+});
+```
+
+2. 页面坐标位置
+
+页面坐标通过事件对象的 pageX 和 pageY 属性。这两个属性表示鼠标光标在页面中的位置，因此坐标是从页面本身而非视口的左边和顶边计算的。
+以下代码可以取得鼠标事件在页面中的坐标
+
+```javascript
+var div = document.getElementById("myDiv");
+EventUtil.addHandler(div,"click",fucntion(event){
+    event = EventUtil.getEvent(event);
+    alert("Client coordinate " + event.pageX + "," + event.pageY);
+});
+```
+
+3. 屏幕坐标位置
+
+
 
 
 
