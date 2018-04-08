@@ -1713,6 +1713,30 @@ EventUtil.addHandler(div,"click",fucntion(event){
 
 3. 屏幕坐标位置
 
+相对于整个电脑屏幕的位置。通过 screenX 和 screenY 属性就可以确定鼠标事件发生时鼠标指针相对于整个屏幕的坐标信息。
+可以使用如下代码取得鼠标事件的屏幕坐标
+
+```javascript
+var div = document.getElementById("myDiv");
+EventUtil.addHandler(div,"click",function(event){
+    event = EventUtil.getEvent(event);
+    alert("Screen coordinates: " + event.screenX + "," + event.screenY);
+});
+```
+
+4. 修改键
+
+DOM 规定了4个属性表示修改键的状态：shiftKey,ctrlKey,alterKey 和 metaKey.
+这些属性都包含的是布尔值，如果键被按下了，则值为 true，否则为 false.
+
+### 键盘与文本事件
+
+“DOM3 级事件”有3个键盘事件：
+- keydown:当用户按下键盘上任意键时触发，如果按下不放的话，会重复触发此事件
+- keypress:当用户按下键盘上的字符时触发，如果按下不放的话，会重复触发此事件
+- keyup:当用户释放键盘上的键时触发。
+
+
 
 
 
