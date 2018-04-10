@@ -1660,7 +1660,7 @@ UI 事件事件指的是那些不一定与用户操作有关的事件。
 var isSupported = document.implementation.hasFeature("FocusEvent","3.0");
 ```
 
-### 鼠标与滚轮事件
+### 13.4.3. 鼠标与滚轮事件
 
 DOM3 级事件中定义了9个鼠标事件
 
@@ -1729,20 +1729,132 @@ EventUtil.addHandler(div,"click",function(event){
 DOM 规定了4个属性表示修改键的状态：shiftKey,ctrlKey,alterKey 和 metaKey.
 这些属性都包含的是布尔值，如果键被按下了，则值为 true，否则为 false.
 
-### 键盘与文本事件
+### 13.4.4. 键盘与文本事件
 
 “DOM3 级事件”有3个键盘事件：
 - keydown:当用户按下键盘上任意键时触发，如果按下不放的话，会重复触发此事件
 - keypress:当用户按下键盘上的字符时触发，如果按下不放的话，会重复触发此事件
 - keyup:当用户释放键盘上的键时触发。
 
-
-
-
-
-
-
 # 14. 表单脚本
+
+## 14.1. 表单的基础知识
+
+HTMLFormElement 继承了 HTMLElement。HTMLFormElement 自己独有的属性和方法：
+
+- acceptCharset:服务能够处理的字符集，等价于 HTML 中的 accept-charset 特性。
+- action:接受请求的 URL;等价于 HTML 中的 action 特性。
+- elements:表单中所有控件的集合
+- enctype:请求的编码类型，等价于 HTML 中的 entype 特性。
+- length:表单中控件的数量
+- method:要发送的 HTTP 请求类型，通常是 “get" 或 "post" ,等价于 HTML 的 method 特性。
+- name:表单的名称,等价于 HTML 的 name 特性。
+- reset():将所有表单域重置为默认值
+- submit():提交表单。
+- target:用于发送请求与接收响应的窗口名称,等价于 HTML 的 target 特性。
+
+取得 &lt;form&gt;元素引用的方式：
+
+- 使用 id
+
+```javascript
+var form = document.getElementById("form1");
+```
+
+- 通过 document.forms 可以取得页面中所有表单
+
+```javascript
+var firstForm = document.forms[0];
+```
+
+### 14.1.1. 提交表单
+
+使用 &lt;input&gt;或&lt;button&gt;都可以定义提交按钮，只要将 type 特性的值设置为 "submit" 即可。只要单击以下代码生成的按钮，就可以提交表单。
+
+```javascript
+<!-- 通用提交按钮 -->
+<input type = "submit" value = "Submit Form">
+<!-- 自定义提交按钮 -->
+<button type = "submit">Submit Form</button>
+<!-- 图像按钮 -->
+<input type = "image" src = "graphic.gif">
+```
+阻止表单提交
+
+```javascript
+var form = document.getElementById("myForm");
+EventUtil.addHandler(form,"submit",function(event){
+    //获取事件对象
+    event =  EventUtil.getEvent(event);
+
+    //阻止默认事件
+    EventUtil.preventDefault(event);
+});
+```
+
+以编程方式调用 submit() 方法也可以提交表单。而且这种方式无需表单包含提交按钮，任何时候都可以正常提交表单。
+
+```javascript
+var form = document.getElementById("myForm");
+//提交表单
+form.submit();
+```
+
+防止重复提交表单的方式
+- 第一次提交表单后禁止提交按钮
+- 利用 onsubmit 事件处理程序取消后续的表单提交操作
+
+### 14.1.2. 重置表单
+
+使用 type 特性值为”reset"的 &lt;input&gt;&lt;button&gt;都可以创建重置按钮
+
+```javascript
+<!-- 通用重置按钮 -->
+<input type = "reset" value = "Submit Form">
+<!-- 自定义重置按钮 -->
+<button type = "reset">Submit Form</button>
+```
+
+用户单击重置按钮重置表单时，就会触发 reset 事件。
+取消重置操作：
+
+```javascript
+var form = document.getElementById("myForm");
+EventUtil.addHandler(form,"reset",function(event){
+    //取得事件对象
+    event = EventUtil.getEvent(event);
+    //阻止表单重置
+    EventUtil.preventDefault(event);
+});
+```
+
+与提交表单一样，也可以通过 JavaScript 来重置表单。
+
+```javascript
+var form = document.getElementById("myForm");
+//重置表单
+form.reset();
+```
+### 表单字段
+
+每个表单都有 elements 属性，该属性是表单中所有元素的集合。这个 elements 集合是一个有序列表，其中包含着表单中的所有字段。
+
+```javascript
+var form = document.getElementById("form1");
+//取得表单中的第一个字段 
+var field1 = form.elements[0];
+//取得名为"textbox1"的字段 
+var field2 = form.elements["textbox1"];
+//取得表单中包含的字段的数量 
+var fieldCount = form.elements.length;
+```
+
+如果有多个表单控件都在使用一个 name(如单选按钮)，那么就会返回以该 name 命名的一个 NOdeList.
+
+1. 共有的表单字段属性
+2. 
+
+
 
 # 15. 使用Canvas绘图
 
