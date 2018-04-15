@@ -1852,7 +1852,45 @@ var fieldCount = form.elements.length;
 如果有多个表单控件都在使用一个 name(如单选按钮)，那么就会返回以该 name 命名的一个 NOdeList.
 
 1. 共有的表单字段属性
-2. 
+- disabled:布尔值，表示当前字段是否被禁用
+- form:指向当前字段所属表单的指针，只读
+- name:当前字段的名称
+- readOnly:布尔值，表示当前字段是否只读
+- tabIndex:表示当前字段的切换（tab)序号
+- type:当前字段的类型,如 “checkbox"，”radio"，等。
+- value:当前字段将被提交到服务器的值。
+
+避免重复提交表单，只要侦听 submit 事件，并在该事件发生时禁用提交按钮。
+
+```javascript
+//避免多次提交表单
+EventUtil.addHandler(form,"submit",funtion(event){
+    event = EventUtil.getEvent(event);
+    var target = EventUtil.getTarget(event);
+    //取得提交按钮
+    var btn = target.elements["submit-btn"];
+    //禁用它
+    btn.disabled = true;
+});
+```
+注意不能通过 onclick 事件处理程序来实现这个功能，原因是不同浏览器之间存在时差，有的浏览器会在触发表单 submit 事件之前触发 click 事件，而有的浏览器则相反。
+不过这种方式不适合表单中不包含提交按钮的情况。
+所有表单都有 type 属性。
+
+&lt;input&gt;与&lt;button&gt;元素的 type 属性是可以动态修改的。而 &lt;select&gt;元素的type 属性则是只读的。
+2. 共有的表单字段方法
+
+每个表单字段都有两个方法：focus() 和 blur();
+与 focus() 方法相对的是 blur() 方法，它的作用是从元素中移走焦点。可以使用 blur() 方法来创建只读字段
+
+3. 共有的表单字段事件
+
+除了支持鼠标、键盘、更改和 HTML 事件之外，所有表单字段都支持下列3个事件。
+
+- blur:当前字段失去焦点时触发。
+- change:对于&lt;input&gt;和&lt;textarea&gt;元素，在它们失去焦点且 value 值改变时触发；对于 &lt;select&gt; 元素，在其选项改变时触发。
+- focus:当前字段获得焦点时触发。
+
 
 
 
