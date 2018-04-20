@@ -65,3 +65,34 @@ CAST (expression AS data_type)
 
 SELECT DISTINCT HouseName FROM MainTable GROUP BY HouseName HAVING COUNT(*) > 1
 
+# Group By
+```sql
+select BusinessCode, [values]=stuff((select ','+FlageCode from R_SYS_business_logic t where BusinessCode=t.BusinessCode for xml path('')), 1, 1, '') 
+from R_SYS_business_logic 
+group by BusinessCode 
+```
+## stuff函数
+
+```sql
+STUFF ( character_expression , start , length ,character_expression ) 
+```
+参数
+- character_expression：一个字符数据表达式。character_expression 可以是常量、变量，也可以是字符列或二进制数据列。
+- start：一个整数值，指定删除和插入的开始位置。如果 start 或 length 为负，则返回空字符串。如果 start 比第一个character_expression 长，则返回空字符串。start 可以是 bigint 类型。
+- length：一个整数，指定要删除的字符数。如果 length 比第一个 character_expression 长，则最多删除到最后一个character_expression 中的最后一个字符。length 可以是 bigint 类型。
+- 返回类型：如果 character_expression 是受支持的字符数据类型，则返回字符数据。如果 character_expression 是一个受支持的 binary 数据类型，则返回二进制数据。
+
+备注：如果开始位置或长度值是负数，或者如果开始位置大于第一个字符串的长度，将返回空字符串。如果要删除的长度大于第一个字符串的长度，将删除到第一个字符串中的第一个字符。 
+如果结果值大于返回类型支持的最大值，则产生错误。
+
+示例 
+以下示例在第一个字符串 abcdef 中删除从第 2 个位置（字符 b）开始的三个字符，然后在删除的起始位置插入第二个字符串，从而创建并返回一个字符串。
+
+SELECT STUFF('abcdef', 2, 3, 'ijklmn'); 
+GO
+
+下面是结果集： 
+--------- 
+aijklmnef
+
+(1 row(s) affected)
