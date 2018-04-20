@@ -1835,7 +1835,7 @@ var form = document.getElementById("myForm");
 //重置表单
 form.reset();
 ```
-### 表单字段
+### 14.1.3. 表单字段
 
 每个表单都有 elements 属性，该属性是表单中所有元素的集合。这个 elements 集合是一个有序列表，其中包含着表单中的所有字段。
 
@@ -1890,6 +1890,14 @@ EventUtil.addHandler(form,"submit",funtion(event){
 - blur:当前字段失去焦点时触发。
 - change:对于&lt;input&gt;和&lt;textarea&gt;元素，在它们失去焦点且 value 值改变时触发；对于 &lt;select&gt; 元素，在其选项改变时触发。
 - focus:当前字段获得焦点时触发。
+
+blur 和 focus 事件在所有表单字段中都是相同的.但是,change 事件在不同表单控件中触发的次数会有所不同，对于 &lt;input&gt; 和 &lt;textarea&gt; 元素，当它们从获得焦点到失去焦点且 value 值改变时，才会触发 change 事件.对于 &lt;select&gt;元素，只要用户选择了不同的选项，就会触发 change 事件，换句话说，不失去焦点也会触发 change 事件。
+
+可以使用 focus 和 blur 事件来以某种方式来改变用户界面，要么是向用户给出视觉提示，要么是向界面中添加额外的功能。而 change 事件则经常用于验证用户在字段中输入的数据。
+
+## 文本框脚本
+
+
 
 
 
