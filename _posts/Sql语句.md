@@ -96,3 +96,5 @@ GO
 aijklmnef
 
 (1 row(s) affected)
+
+## for xml path
