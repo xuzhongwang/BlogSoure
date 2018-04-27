@@ -12,7 +12,10 @@ tags:
 $("#comboid").combobox({
     url:"/Ashx/ImpownContract.ashx?type=GetOtherMan",
     valueField:"code",
-    textField: "name_c"
+    textField: "name_c",
+    onSelect:function(record){
+        var selectValue = record.value;
+    }
 });
 
 //获取json数据格式
