@@ -98,3 +98,7 @@ aijklmnef
 (1 row(s) affected)
 
 ## for xml path
+
+# 判断是否相等
+
+  select isnull(nullif('1','1'),0)
