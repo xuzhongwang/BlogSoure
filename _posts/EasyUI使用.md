@@ -42,6 +42,14 @@ $('#HouseData').datagrid({
 });
 ```
 
+## load,reload和loadData
+
+```javascript
+$(“#grid”).datagrid(“load”,{ }); //里面写的是你要传输的参数的键值对，调用这个方法来加载数据的时候，它传给后台的分页信息是从第一页开始的。
+$(“#grid”).datagrid(“reload”,{ });//但它传给后台的分布信息是当前的页码，就是实现刷新当前页的功能。
+$(“#grid”).datagrid(“loadData”,{ “total”:”30″,rows:[] });//它加载的本地数据，就是不会跟后台什么的有交互，它的使用方式是
+```
+
 ## 1.2. 获取选中行
 
 ```javascript
@@ -65,6 +73,8 @@ else {
 
 # 2. combobox
 
+## 从后台加载数据
+
 ```javascript
 $("#comboid").combobox({
     url:"/Ashx/ImpownContract.ashx?type=GetOtherMan",
@@ -84,13 +94,14 @@ $("#comboid").combobox({
 {"code":"0005","name_c":"中国建设银行股份有限公司济宁分行"},
 {"code":"0006","name_c":"山东圣泰农村合作银行草桥口支行"},
 ]
+```
 
+## 常用方法
+
+```javasript
 $("#xx").combobox({disabled: true});      //设置下拉款为禁用
-
 $("#xx").combobox('setValue',xlid);  //设置下拉款的默认值  xlid是你下拉款的id属性
-
 $("#xx").combobox('getValue');      //获取下拉款id值
-
 $("#xx").combobox('getText');      //获取下拉款name值
 ```
 

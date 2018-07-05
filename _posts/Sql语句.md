@@ -66,11 +66,13 @@ CAST (expression AS data_type)
 SELECT DISTINCT HouseName FROM MainTable GROUP BY HouseName HAVING COUNT(*) > 1
 
 # Group By
+
 ```sql
 select BusinessCode, [values]=stuff((select ','+FlageCode from R_SYS_business_logic t where BusinessCode=t.BusinessCode for xml path('')), 1, 1, '') 
 from R_SYS_business_logic 
 group by BusinessCode 
 ```
+
 ## stuff函数
 
 ```sql
@@ -93,6 +95,7 @@ GO
 
 下面是结果集： 
 --------- 
+
 aijklmnef
 
 (1 row(s) affected)
