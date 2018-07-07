@@ -1948,6 +1948,74 @@ ECMAScript5 定义了全局对象 JSON
 
 ### 序列化选项
 
+JSON.stringify() 除了要序列化的 JavaScript 对象外，还可以接收另外两个参数，这两个参数用于指定以不同方式序列化 JavaScript对象。
+第一个参数是过滤器，可以是一个数组，也可以是一个函数。
+第二个参数是一个选项，表示是否在JSON字符串中保留缩进。
+
+1. 过滤结果
+
+```javascript
+var book = {
+    "title":"Professional JavaScript",
+    "authors":["Ni"],
+    edition:3,
+    year:2011
+}
+var jsonText = JSON.stringify(book,["title","edition"]);
+```
+
+如果第二个参数是函数，行为会稍有不同，传入的函数接收两个参数，属性（键）名和属性值。
+
+```javascript
+var book = {
+    "title":"Professional JavaScript",
+    "authors":["Ni"],
+    edition:3,
+    year:2011
+}
+var jsonText = JSON.stringify(book,function(key,value){
+    switch(key){
+        case "authors":
+        return value.join(",");
+    }
+});
+```
+
+2. 字符串缩进
+
+JSON.stringify() 方法的第三个参数用于控制结果中的缩进和空白符。如果这个参数是一个数值，那它表示的是每个级别缩进的空格数。
+
+3. toJSON() 方法
+
+在对象上调用 toJSON 方法，返回其自身的 JSON 数据格式。
+
+可以为任何对象添加 toJSON() 方法，如：
+
+```javascript
+var book = {
+    "title":"Professional JavaScript",
+    "authors":["Ni"],
+    edition:3,
+    year:2011,
+    toJSON:function(){
+        return this.title;
+    }
+}
+var jsonText = JSON.stringify(book);
+```
+
+把一个对象传入 JSON.stringify(),序列化该对象的顺序如下：
+
+(1) 如果存在 toJSON 方法而且能通过它取得有效值，则调用该方法，否则按默认顺序执行序列化。
+(2) 如果提供了第二个参数，应用这个函数过滤器。传入函数过滤器的值是第(1)步返回的值。
+(3) 对第(2)步返回的每个值进行相应序列化。
+(4) 如果提供了第三个参数，执行相应格式化。
+
+
+
+
+### 序列化选项
+
 
 # 21. 2Ajax与Comet
 
