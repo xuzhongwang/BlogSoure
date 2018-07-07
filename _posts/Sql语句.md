@@ -65,7 +65,7 @@ CAST (expression AS data_type)
 
 SELECT DISTINCT HouseName FROM MainTable GROUP BY HouseName HAVING COUNT(*) > 1
 
-# Group By
+# 6. Group By
 
 ```sql
 select BusinessCode, [values]=stuff((select ','+FlageCode from R_SYS_business_logic t where BusinessCode=t.BusinessCode for xml path('')), 1, 1, '') 
@@ -73,7 +73,7 @@ from R_SYS_business_logic
 group by BusinessCode 
 ```
 
-## stuff函数
+## 6.1. stuff函数
 
 ```sql
 STUFF ( character_expression , start , length ,character_expression ) 
@@ -100,8 +100,69 @@ aijklmnef
 
 (1 row(s) affected)
 
-## for xml path
+## 6.2. for xml path
 
-# 判断是否相等
+# 7. 判断是否相等
 
   select isnull(nullif('1','1'),0)
+
+# 链接服务器脚本
+
+```sql
+USE [master]
+GO
+
+/****** Object:  LinkedServer [linkserverW]    Script Date: 2018-07-06 08:43:18 ******/
+EXEC master.dbo.sp_addlinkedserver @server = N'linkserverW', @srvproduct=N'', @provider=N'SQLNCLI', @datasrc=N'192.168.60.69'
+ /* For security reasons the linked server remote logins password is changed with ######## */
+EXEC master.dbo.sp_addlinkedsrvlogin @rmtsrvname=N'linkserverW',@useself=N'False',@locallogin=NULL,@rmtuser=N'sa',@rmtpassword='########'
+
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'collation compatible', @optvalue=N'false'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'data access', @optvalue=N'true'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'dist', @optvalue=N'false'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'pub', @optvalue=N'false'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'rpc', @optvalue=N'false'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'rpc out', @optvalue=N'false'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'sub', @optvalue=N'false'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'connect timeout', @optvalue=N'0'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'collation name', @optvalue=null
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'lazy schema validation', @optvalue=N'false'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'query timeout', @optvalue=N'0'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'use remote collation', @optvalue=N'true'
+GO
+
+EXEC master.dbo.sp_serveroption @server=N'linkserverW', @optname=N'remote proc transaction promotion', @optvalue=N'true'
+GO
+```
+
+# 为链接服务器创建同义词
+
+```sql
+/****** Object:  Synonym [dbo].[Code_menu]    Script Date: 2018-07-06 08:46:26 ******/
+CREATE SYNONYM [dbo].[Code_menu] FOR [linkserverP].[p_dremis].[dbo].[Code_menu]
+GO
+```
