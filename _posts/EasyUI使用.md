@@ -112,4 +112,14 @@ var isHaveHouse =  $("#HouseDiv").is(":hidden");//是否隐藏
 var temp1=$("#test").is(":visible");//是否可见
 ```
 
-# treegrid
+# Parser(解析器)
+
+解析器是 easy ui 很重要的基础组件，在 easy ui 中我们可以简单的通过 class 定义一个组件，从而渲染出很好的交互效果，就是通过 parser 进行解析的。
+
+parser 会获取全部在指定内定为 easy ui 组件的 class 定义，而且根据后缀定义把当前节点解析渲染成特定组件。
+
+```javascript
+$.parser.parse();//不带参数，默认解析该页面中全部定义为 easyui 组件的节点
+$.parser.onComplete();//在解析器完成解析操作的时候触发。
+$.parser.parse('#cc');//带一个jquery 选择器，使用这样的方式能够单独解析局部 easyui 组件节点
+```
