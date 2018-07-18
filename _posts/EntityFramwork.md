@@ -70,3 +70,9 @@ PM> Update-Database –TargetMigration:"201309201643300_AddCity.cs"
 Update-Database -Script -SourceMigration:"201309201643300_AddCity.cs" -TargetMigration:"201309201708043_ModifyCity.cs" 
 
 ```
+
+# 问题
+
+## LINQ to Entities 不支持指定的类型成员“Date”。只支持初始值设定项、实体成员和实体导航属性。
+
+将时间字符串写在 linq 外面
