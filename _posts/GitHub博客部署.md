@@ -5,6 +5,7 @@ tags:
 ---
 这是我的第一篇博客，我把它献给了提供这个博客的平台，记录一下在GitHub上如何部署自己的博客。
 用到的工具：
+
 - Nodejs
   包含npm
 - Git
@@ -20,31 +21,41 @@ tags:
     Hexo 3.4.4
 
 # 1. 工具的安装
+
 ## 1.1. NodeJs安装
+
    在官网下载最新的安装包，按引导一步步安装。
+
 ## 1.2. Git安装
+
    按引导至安装完成。
+
 ## 1.3. Hexo安装及配置
+
 ### 1.3.1. Hexo安装
+
    打开命令行，找到刚才NodeJs的安装目录，输入如下指令
-   ```
+
+   ```npm
    npm install hexo-cli -g
    ```
-   ![install hexo](GitHub博客部署/install hexo.png)
+
+   ![install hexo](GitHub博客部署/install_hexo.png)
+
 ### 1.3.2. Hexo初始化配置
 1. 配置博客目录
     在命令行中进入你要放置博客的路径，执行如下命令，会创建一个Blog的文件夹，并时行一些组件的安装。
    ```
    hexo init blog
    ```
-   ![init blog](GitHub博客部署/init blog.png)
+   ![init blog](GitHub博客部署/init_blog.png)
    安装完成如下图所示
-   ![init blog finish](GitHub博客部署/init blog finish.png)
+   ![init blog finish](GitHub博客部署/init_blog_finish.png)
    此时执行
    ```
    hexo server
    ```
-  ![hexo server](GitHub博客部署/hexo server.png)
+  ![hexo server](GitHub博客部署/hexo_server.png)
 
 ## 1.4. 发布到github
 ### 1.4.1. 注册github
@@ -60,7 +71,7 @@ ssh-keygen -t rsa -C "邮件地址"
 ```
 
 然后连续3次回车，最终会生成一个文件在用户目录下，打开用户目录，找到.ssh\id_rsa.pub文件，记事本打开并复制里面的内容，打开你的github主页，进入个人设置 -> SSH and GPG keys -> New SSH key：
-![add ssh key](GitHub博客部署/add ssh key.png)
+![add ssh key](GitHub博客部署/add_ssh_key.png)
 然后在git bash中配置
 ```
 $ git config --global user.name "liuxianan"// 你的github用户名，非昵称
@@ -73,7 +84,7 @@ $ git config --global user.email  "xxx@qq.com"// 填写你的github注册邮箱
 ```
    ![install deployer](GitHub博客部署/install deployer.png)
    然后在你博客的目录下找到_config.yml配置deploy部分
-![deploy set](GitHub博客部署/deploy set.png)
+![deploy set](GitHub博客部署/deploy_set.png)
 
 工具都安装完成后，就可以写博客了
 
