@@ -49,15 +49,15 @@ public class FisrtCADTest
 
 书中介绍了一种方法，不再赘述，下面来说一下我常用的方法
 在解决方案资源管理器中右击解决方案，选择“添加”-“现有项目”
-![add debug cad project](CAD二次开发/add debug cad project.png)
+![add_debug_cad_project](CAD二次开发/add_debug_cad_project.png)
 在打开的对话框中找到CAD安装路径下的acad.exe,选择打开
-![find acad](CAD二次开发/find acad.png)
+![find_acad](CAD二次开发/find_acad.png)
 将刚添加的项目设置为启动项目
-![set startup](CAD二次开发/set startup.png)
+![set startup](CAD二次开发/set_startup.png)
 设置项目属性
-![set property](CAD二次开发/set property.png)
+![set property](CAD二次开发/set_property.png)
 修改调试器类型如下图所示
-![set debugger type](CAD二次开发/set debugger type.png)
+![set debugger type](CAD二次开发/set_debugger_type.png)
 在需要的地方设置断点，启动项目，会发现CAD程序会被找开，netload加载程序集，就可以调试啦
 
 # 3. 错误记录
