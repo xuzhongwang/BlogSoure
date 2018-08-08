@@ -265,7 +265,8 @@ ECMAScript函数的一个重要特点：命名的参数只提供便利，但不�
 
 ### 4.1.1. 传递参数
 
-ECMAScript中所有函数的参数都是按值来传递的。
+访问变量有按值和按引用两种方式,ECMAScript中所有函数的参数都是按值来传递的。
+
 例子：
 
 ```javacript
@@ -278,6 +279,8 @@ var person = new Object();
 setName(person);
 alert(person.name);  //"Nicholas"
 ```
+
+在上例中，当函数内部重写 obj 时，这个变量引用的就是一个局部对象了。而这个局部对象会在函数执行完毕后立即被销毁。
 
 ### 4.1.2. 检测类型
 
