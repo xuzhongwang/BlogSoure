@@ -30,3 +30,34 @@ define([module-name?],[array-of-dependencies?],[module-factory-or-object])
 ### 匿名模块
 
 define 方法允许你省略第一个参数，这样就定义了一个匿名模块，这时候模块文件的文件名就是模块标识。
+
+# jQuery 对象与 dom 对象转换
+
+## jQuery 转换成 dom 对象
+
+- [index]
+
+```javascript
+var $j =$("#j") ; //jQuery对象
+var d=$j[0]; //DOM对象 
+```
+
+- .get(index)
+
+```javascript
+var $j=$("#v"); //jQuery对象
+var d=$j.get(0); //DOM对象
+```
+
+## dom 对象转换成 jQuery
+
+对于已经是一个DOM对象，只需要用$()把DOM对象包装起来，就可以获得一个jQuery对象了。
+
+```javascript
+var v=document.getElementById("v"); //DOM对象
+var $v=$(v); //jQuery对象
+```
+
+# $.data()
+
+$.data(dom对象, 'tree');

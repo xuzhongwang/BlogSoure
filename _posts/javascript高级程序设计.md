@@ -594,7 +594,7 @@ var pattern = /\[bc\]at/i;
 | rightContext | $`       | input字符串中lastMach之后的文本          |
 
 
-除了上面的属性外，还有9个用于存储捕获组的构造函数属性。访问语法是 
+除了上面的属性外，还有9个用于存储捕获组的构造函数属性。访问语法是
 
 ```javascript
 RegExp.$1、RegExp.$2
