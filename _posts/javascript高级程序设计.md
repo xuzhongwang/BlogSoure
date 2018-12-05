@@ -213,6 +213,7 @@ Object类型都具有的属性和方法
 
 乘性操作符有三个：乘法、除法和求模。
 如果参与乘法计算的某个操作数不是数值，后台会先使用Number()转型函数将其转换成数值。
+
 ### 3.4.4. 相等操作符
 
 全等操作符由3个等号(===)表示，它只在两个操作数未经转换就相等的情况下返回true.
@@ -673,6 +674,26 @@ data.sort(CreateComparisonFunction("name"));
 - call():接收两个参数，一个是在其中运行函数的作用域，另一个是参数，必须是一一列举的参数。
 
 它们真正强大的地方是能扩展函数赖以运行的作用域，扩充作用域的最大好处就是对象不需要与方法有任何耦合关系。
+
+apply 一些其它巧妙用法
+
+（1）Math.max 可以实现得到数组中最大的一项：
+因为Math.max不支持Math.max([param1,param2])也就是数组，但是它支持Math.max(param1,param2...)，所以可以根据apply的特点来解决 var max=Math.max.apply(null,array)，这样就轻易的可以得到一个数组中的最大项（apply会将一个数组转换为一个参数接一个参数的方式传递给方法）
+这块在调用的时候第一个参数给了null，这是因为没有对象去调用这个方法，我只需要用这个方法帮我运算，得到返回的结果就行，所以直接传递了一个null过去。
+用这种方法也可以实现得到数组中的最小项：Math.min.apply(null,array)
+
+（2）Array.prototype.push可以实现两个数组的合并
+同样push方法没有提供push一个数组，但是它提供了push(param1,param2...paramN)，同样也可以用apply来转换一下这个数组，即：
+
+```javascript
+var arr1=new Array("1","2","3");
+var arr2=new Array("4","5","6");
+var arrayLength = Array.prototype.push.apply(arr1,arr2);    //得到合并后数组的长度，因为push就是返回一个数组的长度
+console.log("length:" + arrayLength);
+console.log("arr1 length:" + arr1.length);//6
+console.log("arr2 length:" + arr2.length);//3
+```
+
 
 - bind()方法
 
