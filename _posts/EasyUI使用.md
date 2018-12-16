@@ -42,7 +42,7 @@ $('#HouseData').datagrid({
 });
 ```
 
-## load,reload和loadData
+## 1.2. load,reload和loadData
 
 ```javascript
 $(“#grid”).datagrid(“load”,{ }); //里面写的是你要传输的参数的键值对，调用这个方法来加载数据的时候，它传给后台的分页信息是从第一页开始的。
@@ -50,7 +50,7 @@ $(“#grid”).datagrid(“reload”,{ });//但它传给后台的分布信息是
 $(“#grid”).datagrid(“loadData”,{ “total”:”30″,rows:[] });//它加载的本地数据，就是不会跟后台什么的有交互，它的使用方式是
 ```
 
-## 1.2. 获取选中行
+## 1.3. 获取选中行
 
 ```javascript
 if ($("#dg_houselist").datagrid("getSelections").length >= 1) {
@@ -73,7 +73,7 @@ else {
 
 # 2. combobox
 
-## 从后台加载数据
+## 2.1. 从后台加载数据
 
 ```javascript
 $("#comboid").combobox({
@@ -96,7 +96,7 @@ $("#comboid").combobox({
 ]
 ```
 
-## 常用方法
+## 2.2. 常用方法
 
 ```javasript
 $("#xx").combobox({disabled: true});      //设置下拉款为禁用
@@ -112,7 +112,7 @@ var isHaveHouse =  $("#HouseDiv").is(":hidden");//是否隐藏
 var temp1=$("#test").is(":visible");//是否可见
 ```
 
-# Parser(解析器)
+# 4. Parser(解析器)
 
 解析器是 easy ui 很重要的基础组件，在 easy ui 中我们可以简单的通过 class 定义一个组件，从而渲染出很好的交互效果，就是通过 parser 进行解析的。
 
@@ -122,4 +122,28 @@ parser 会获取全部在指定内定为 easy ui 组件的 class 定义，而且
 $.parser.parse();//不带参数，默认解析该页面中全部定义为 easyui 组件的节点
 $.parser.onComplete();//在解析器完成解析操作的时候触发。
 $.parser.parse('#cc');//带一个jquery 选择器，使用这样的方式能够单独解析局部 easyui 组件节点
+```
+
+# 5. checkbox
+
+## 5.1. 获取元素下所有checkbox被选中的元素
+
+```javascript
+        var systemCodes = [];
+        $("#Flags input[type='checkbox']:checked").each(function(index, ele) {
+            systemCodes.push(ele.value);
+        });
+```
+
+## 5.2. 将指定value值的checkobx选中
+
+```javascript
+            if (res.Data != null) {
+                $("#Flags input:checkbox").each(function (index, ele) {
+                    var value = ele.value;
+                    if (res.Data.indexOf(value) >= 0) {
+                        $(this).attr("checked", 'true');
+                    }
+                });
+            }
 ```
