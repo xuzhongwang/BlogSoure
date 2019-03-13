@@ -527,6 +527,39 @@ Date类型使用UTC(Coordinated Universal Time，国际协调时间)1970年1月1
 
 这些参数只有前两个，年和月是必需的。
 
+### 5.3.3. Date 格式化字符串
+
+```javascript
+Date.prototype.Format = function (fmt) { //author: meizz 
+         var o = {
+              "M+": this.getMonth() + 1, //月份 
+              "d+": this.getDate(), //日 
+              "h+": this.getHours(), //小时 
+              "m+": this.getMinutes(), //分 
+              "s+": this.getSeconds(), //秒 
+              "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+              "S": this.getMilliseconds() //毫秒 
+          };
+          if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (var k in o)
+              if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+
+         return fmt;
+
+}
+var maydate = new Date();
+console.log(" mydate :" + maydate.Format("yyyy-MM-dd hh:mm:ss q季度 S毫秒"));
+```
+
+### 5.3.4. Date 常用运算
+
+```javascript
+//获取6个月之前
+var nowDate=new Date()
+nowDate.setMonth(nowDate.getMonth()-5)
+console.log("addDate:" +nowDate.Format("yyyy-MM-dd hh"));
+```
+
 ## 5.4. RegExp类型
 
 每个正则表达式可以带有一个或多个参数用以表明正则表达式行为，正则表达式的匹配模式支持以下3个标志
