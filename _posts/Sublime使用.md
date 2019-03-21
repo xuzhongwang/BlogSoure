@@ -204,3 +204,29 @@ PATH的值是nodejs的安装路径。
 新建一个文件，随便写一段JavaScript代码，按快捷键：
 Ctrl + B
 即可看到运行结果。
+
+# 解决PackageControl无法使用的问题
+
+1.下载 JSON文件：“https://packagecontrol.io/channel_v3.json”；
+
+2.修改 JSON文件中的版本号“schema_version”，将“3.0.0”修改为 “2.0”；
+
+3.打开 首选项 --》插件设置 --》Package Control --》 设置-用户  （或者“设置-默认”）
+
+4.修改第3步设置文件中的 channels 属性的值，
+在 channels[……]的最前面添加 JSON文件 的 地址（步骤1下载的文件）
+注意：英文逗号分割  和  斜线方向
+
+```json
+"channels":
+[
+	"D:/Program Files/Sublime Text 3.3126x64/Data/ChannelJson_download/channel_v3.json",
+	"https://packagecontrol.io/channel_v3.json"
+]
+```
+
+5.保存上述打开的文件。
+
+```cmd
+ Ctrl+Shift+P 输入“pc:ip”（package control:install package），回车。
+```
