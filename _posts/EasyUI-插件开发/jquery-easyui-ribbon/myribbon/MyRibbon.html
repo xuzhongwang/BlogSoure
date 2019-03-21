@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ribbon</title>
+	<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="myribbon-icon.css">
+	<script type="text/javascript" src="../jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="jquery.myRibbon.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#myribbon").ribbon();
+		})
+	</script>
+</head>
+<body>
+	<div id="myribbon">
+		<div class="easyui-tabs" style="width:700px;height:250px">
+			<div title="Home">
+				<span style="display:inline-block;margin:18px">
+					<div class="easyui-splitbutton" data-options="menu:'#mm1',iconCls:'icon-paste-large',iconAlign:'top',size:'large' ">Paste</div>
+				</span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<div title="Insert"></div>
+		</div>
+	</div>
+	<div id="mm1">
+		<div>Paste</div>
+		<div>Paste Special</div>
+	</div>
+</body>
+</html>
