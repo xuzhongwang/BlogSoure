@@ -9,6 +9,17 @@
 	<script type="text/javascript" src="../jquery.min.js"></script>
 	<script type="text/javascript" src="../jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="jquery.myRibbon.js"></script>
+<style>
+
+	.group  {
+		float: left;
+		height: 100px;
+		margin: 2 2px;
+		border-left: 1px solid #ccc;
+		border-right: 1px solid #fff;
+	}
+</style>
+
 	<script type="text/javascript">
 		$(function(){
 			$("#myribbon").ribbon();
@@ -17,15 +28,20 @@
 </head>
 <body>
 	<div id="myribbon">
-		<div class="easyui-tabs" style="width:700px;height:250px">
+		<div class="easyui-tabs" style="width:700px;height:150px">
 			<div title="Home">
-				<span style="display:inline-block;margin:18px">
+				<div class="group">
+					<div style="display:inline-block;margin:18px">
 					<div class="easyui-splitbutton" data-options="menu:'#mm1',iconCls:'icon-paste-large',iconAlign:'top',size:'large' ">Paste</div>
-				</span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
+					</div>
+				</div>
+				<div class="group">
+					<div style="display:inline-block;margin:18px">
+					<div class="easyui-splitbutton" data-options="menu:'#mm1',iconCls:'icon-paste-large',iconAlign:'top',size:'large' ">Paste</div>
+					</div>
+				</div>
+				
+			
 			</div>
 			<div title="Insert"></div>
 		</div>

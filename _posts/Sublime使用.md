@@ -230,3 +230,18 @@ Ctrl + B
 ```cmd
  Ctrl+Shift+P 输入“pc:ip”（package control:install package），回车。
 ```
+
+# 设置默认浏览器
+
+![设置默认浏览器](Sublime使用/设置默认浏览器.png)
+
+在配置文件中添加如下内容：
+
+```set
+{
+	"cmd":["C:/Program Files/Mozilla Firefox/firefox.exe","$file"],
+	"selector":["text.html"]
+}
+```
+
+ctrl+B 预览
