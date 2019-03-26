@@ -61,3 +61,41 @@ var $v=$(v); //jQuery对象
 # $.data()
 
 $.data(dom对象, 'tree');
+
+# $.extend()的深拷贝和浅拷贝详细讲解
+
+```javascript
+语法：jQuery.extend([deep],target,object1[,objectN])
+```
+
+- 浅拷贝（false默认):如果第二个参数对象有的属性第一个参数对象也有，那么不会进行相同参数内部比较，直接将第一个对象的相同参数覆盖。
+- 深拷贝：如果第二个参数对象有的属性第一个参数对象也有，还要继续在这个相同的参数向下一层找，比较相同参数的对象中是否还有一样的属性，如果有，将其继承到第一个对象，如果没有，则覆盖。
+
+```javascript
+var object1 = {
+    apple: 0,
+    banana: {
+        weight: 52,
+        price: 100
+    },
+    cherry: 97
+};
+var object2 = {
+    banana: {
+        price: 200
+    },
+    durian: 100
+};
+
+//默认情况浅拷贝
+//object1--->{"apple":0,"banana":{"price":200},"cherry":97,"durian":100}
+//object2的banner覆盖了object1的banner，但是weight属性未被继承
+//$.extend(object1, object2);
+
+//深拷贝
+//object1--->{"apple":0,"banana":{"weight":52,"price":200},"cherry":97,"durian":100}
+//object2的banner覆盖了object1的banner，但是weight属性也被继承了呦
+$.extend(true,object1, object2);
+
+console.log('object1--->'+JSON.stringify(object1));
+```

@@ -5,8 +5,10 @@ tags:
 ---
 
 # $.each的用法
+
 ## 遍历对象
-```
+
+```javascript
 $.each(parentData,function(index,childData){
     index ;     //选择器的index位置 
     childData;  //当前元素
@@ -14,6 +16,7 @@ $.each(parentData,function(index,childData){
 ```
 
 # checkbox
+
 1、获取单个checkbox选中项(三种写法)
 $("input:checkbox:checked").val()
 或者
