@@ -5,7 +5,7 @@ tags:
 ---
 
 # 替换
-Ctrl + H进行替换
+Ctrl + H 进行替换
 
 # 安装 Package Control
 

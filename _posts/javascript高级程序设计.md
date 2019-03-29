@@ -289,6 +289,11 @@ typeof操作符是确定一个变量是字符串、数值、布尔值，还是un
 使用typeof操作符检测函数时，返回"function"
 检测引用类型的时，提供instanceof.
 
+```javascript
+var fn = function () { };
+console.log(fn instanceof Object);  // true
+```
+
 ## 4.2. 执行环境及作用域
 
 每个执行环境都有一个与之关联变量对象，环境中定义的所有变量和函数都保存在这个对象中。虽然我们编写的代码无法访问这个对象，但解析器在处理数据时会在后台使用它。
@@ -726,7 +731,6 @@ console.log("length:" + arrayLength);
 console.log("arr1 length:" + arr1.length);//6
 console.log("arr2 length:" + arr2.length);//3
 ```
-
 
 - bind()方法
 
@@ -1264,6 +1268,101 @@ instance2.sayAge();//27
 
 组合继承避免了原型链与借用构造函数的缺陷，融合了它们的优点，成为 JavaScript 中最常用的继承模式。而且， instanceof 和 isPrototypeOf() 也能识别用于识别基于组合继承创建的对象。
 
+## JavaScript中的 this
+
+在函数中this到底如何取值，是在函数真正被调用执行时确定的，函数定义的时候确定不了。
+this的取值，分四种情况：
+
+- 构造函数
+- 函数作为对象的一个属性
+- 函数用call或者apply调用
+- 全局&调用普通函数
+  
+### 构造函数
+
+如果函数作为构造函数用，this指向它即将new出来的对象。
+
+```javascript
+function Foo(){
+    this.name = "aaaa";
+    this.year = "2018";
+    console.log(this);
+}
+
+var f1 = new Foo();
+console.log(f1.name);
+console.log(f1.year);
+```
+
+结果：
+![constructor](JavaScript高级程序设计/构造函数.png)
+但是如果不是作为构造函数，也就是不是new Foo(),而是直接调用Foo(),则this指向的是Window
+
+```javascript
+function Foo(){
+    this.name = "aaaa";
+    this.year = "2018";
+    console.log(this);
+}
+Foo();
+```
+
+![call direct](JavaScript高级程序设计/call_direct.png)
+
+### 函数作为对象的一个属性
+
+如果函数作为对象的一个属性，并且作为一个对象的属性被调用时，函数的this指向该对象。
+
+```javascript
+var obj = {
+    x:10,
+    fn:function(){
+        console.log(this);
+        console.log(this.x);
+    }
+}
+obj.fn();
+```
+
+如果不是作为obj的属性被调用，则this指向Window
+
+```javascript
+var obj = {
+    x:10,
+    fn:function(){
+        console.log(this);
+        console.log(this.x);
+    }
+}
+var fn1 = obj.fn;
+fn1();
+```
+
+![not call for property](JavaScript高级程序设计/not_call_for_property.png)
+
+### 函数用call或者apply调用
+
+当一个函数被call或apply调用时，this的值就取传入对象的值
+
+```javascript
+var obj = {
+    x:10
+};
+
+var fn = function(){
+    console.log(this);
+    console.log(this.x);
+}
+fn.call(obj);
+```
+
+![call or apply](JavaScript高级程序设计/call_or_apply.png)
+
+### 全局&调用普通函数
+
+在全局下，this永远是Window
+普通函数在调用时，其中this就是Window，如上面1与2的第2个例子全是普通函数
+
 # 7. 函数表达式
 
 ## 7.1. 递归
@@ -1304,6 +1403,43 @@ function createComparisionFunction(propertyName){
 
 函数第一次被调用的时候发生了什么：
 当某个函数第一次被调用时，会创建一个执行环境及相应的作用域链，并把作用域链赋值给一个特殊的内部属性（即[[Scope]])。然后，使用 this,arguments 和其它命名参数的值来初始化函数的活动对象。但在作用域链中，外部函数的活动对象始终处于第二位，外部函数的外部函数的活动对象处于第三位··· 直至作为作用域链终点的全局执行环境。
+
+### 闭包常见形式
+
+#### 函数作为返回值
+
+```javascript
+function fn(){
+    var max = 10;
+    return function bar(x){
+        if (x>max) {
+            console.log(x);
+        }
+    }
+}
+var f1 = fn();
+f1(15);
+```
+
+如上代码，bar函数作为返回值，赋值给f1变量，执行f1(15)时，用到了fn作用域下的max变量的值。
+
+#### 函数作为参数被传递
+
+```javascript
+var max = 10;
+var fn = function(x){
+    if (x>max) {
+    console.log(x);
+    }
+};
+
+(function(f){
+    var max = 100;
+    f(15);
+})(fn);
+```
+
+如上代码中，fn函数作为一个参数被传递进入另一个函数，赋值给f参数。执行f(15)时，max变量的取值是10，而不是100。
 
 ### 7.2.1. 内存泄漏
 
