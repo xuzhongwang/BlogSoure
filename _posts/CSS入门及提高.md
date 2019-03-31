@@ -23,6 +23,12 @@ tags:
   
 - 不需要设置的属性可以省略，取默认值，但必须保留 font-size 与 font-family
 
+## input提示
+
+```html
+<input type="text" placeholder="请输入内容"/> 
+```
+
 # 3. 选择器
 
 ## 3.1. 标签选择器（元素选择器）
@@ -322,7 +328,7 @@ CSS 定位机制有3种：普通流（标准流）、浮动和定位
 - 额外标签法：在浮动元素末尾添加一个空的标签，例如 
   
 ```html
-<div style="clear:both"></div>
+    <div style="clear:both"></div>
 ```
 优点：通俗易懂，书写方便
 缺点：添加许多无意义的标签，结构化差。
