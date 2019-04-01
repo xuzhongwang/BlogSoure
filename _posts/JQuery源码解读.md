@@ -99,3 +99,105 @@ $.extend(true,object1, object2);
 
 console.log('object1--->'+JSON.stringify(object1));
 ```
+
+# jQuery 的应用
+
+## $.each的用法
+
+```javascript
+$.each(parentData,function(index,childData){
+    index ;     //选择器的index位置 
+    childData;  //当前元素
+    })
+```
+
+# checkbox
+
+1、获取单个checkbox选中项(三种写法)
+
+```javascript
+$("input:checkbox:checked").val()
+$("input:[type='checkbox']:checked").val();
+$("input:[name='ck']:checked").val();
+```
+
+2、 获取多个checkbox选中项
+
+```javascript
+$('input:checkbox').each(function() {
+        if ($(this).attr('checked') ==true) {
+                alert($(this).val());
+        }
+});
+```
+
+3、设置第一个checkbox 为选中值
+
+```javascript
+$('input:checkbox:first').attr("checked",'checked');
+$('input:checkbox').eq(0).attr("checked",'true');
+```
+
+4、设置最后一个checkbox为选中值
+
+```javascript
+$('input:radio:last').attr('checked', 'checked');
+$('input:radio:last').attr('checked', 'true');
+```
+
+5、根据索引值设置任意一个checkbox为选中值
+
+```javascript
+$('input:checkbox).eq(索引值).attr('checked', 'true');索引值=0,1,2....
+$('input:radio').slice(1,2).attr('checked', 'true');
+```
+
+6、选中多个checkbox同时选中第1个和第2个的checkbox
+
+```javascript
+$('input:radio').slice(0,2).attr('checked','true');
+```
+
+7、根据Value值设置checkbox为选中值
+
+```javascript
+$("input:checkbox[value='1']").attr('checked','true');
+```
+
+8、删除Value=1的checkbox
+
+```javascript
+$("input:checkbox[value='1']").remove();
+```
+
+9、删除第几个checkbox
+
+```javascript
+$("input:checkbox").eq(索引值).remove();索引值=0,1,2....
+// 如删除第3个checkbox:
+$("input:checkbox").eq(2).remove();
+```
+
+10、遍历checkbox
+
+```javascript
+$('input:checkbox').each(function (index, domEle) {
+//写入代码
+});
+```
+
+11、全部选中
+
+```javascript
+$('input:checkbox').each(function() {
+        $(this).attr('checked', true);
+});
+```
+
+12、全部取消选择
+
+```javascript
+$('input:checkbox').each(function () {
+        $(this).attr('checked',false);
+});
+```
