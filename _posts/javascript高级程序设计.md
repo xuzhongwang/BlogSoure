@@ -1268,17 +1268,20 @@ instance2.sayAge();//27
 
 组合继承避免了原型链与借用构造函数的缺陷，融合了它们的优点，成为 JavaScript 中最常用的继承模式。而且， instanceof 和 isPrototypeOf() 也能识别用于识别基于组合继承创建的对象。
 
-## JavaScript中的 this
+## 6.4. JavaScript中的 this
 
+this 就是一个指针，指向调用函数的对象。
 在函数中this到底如何取值，是在函数真正被调用执行时确定的，函数定义的时候确定不了。
 this的取值，分四种情况：
 
-- 构造函数
-- 函数作为对象的一个属性
-- 函数用call或者apply调用
-- 全局&调用普通函数
+- 构造函数(new 绑定)
+- 函数作为对象的一个属性(隐式绑定)
+- 函数用call或者apply调用(硬绑定)
+- 全局&调用普通函数(默认绑定)
+
+绑定的优先级：new 绑定 > 显式绑定 > 隐式绑定 > 默认绑定
   
-### 构造函数
+### 6.4.1. 构造函数
 
 如果函数作为构造函数用，this指向它即将new出来的对象。
 
@@ -1309,9 +1312,9 @@ Foo();
 
 ![call direct](JavaScript高级程序设计/call_direct.png)
 
-### 函数作为对象的一个属性
+### 6.4.2. 函数作为对象的一个属性(隐式绑定)
 
-如果函数作为对象的一个属性，并且作为一个对象的属性被调用时，函数的this指向该对象。
+如果函数作为对象的一个属性，并且作为一个对象的属性被调用时，函数的this指向该对象，典型的形式为 XXX.fun().
 
 ```javascript
 var obj = {
@@ -1321,10 +1324,35 @@ var obj = {
         console.log(this.x);
     }
 }
+var x = 20;
 obj.fn();
 ```
 
-如果不是作为obj的属性被调用，则this指向Window
+结果是 10。
+ 
+需要注意的是：对象属性链中只有最后一层会影响到调用位置。
+
+```javascript
+function sayHi(){
+    console.log('Hello,', this.name);
+}
+var person2 = {
+    name: 'Christina',
+    sayHi: sayHi
+}
+var person1 = {
+    name: 'YvetteLau',
+    friend: person2
+}
+person1.friend.sayHi();
+```
+
+结果是：Hello, Christina。
+因为只有最后一层会确定 this 指向的是什么，不管有多少层，在判断 this 的时候，我们只关注最后一层，即此处的 friend。
+
+#### 隐式绑定的丢失
+
+- 如果不是作为obj的属性被调用，则this指向Window，
 
 ```javascript
 var obj = {
@@ -1340,7 +1368,48 @@ fn1();
 
 ![not call for property](JavaScript高级程序设计/not_call_for_property.png)
 
-### 函数用call或者apply调用
+只需牢牢继续这个格式:XXX.fn();fn() 前如果什么都没有，那么肯定不是隐式绑定，但是也不一定就是默认绑定.
+
+- 除上述情况外，隐式绑定的丢失还发生在回调函数中(事件回调也是其中的一种).
+
+```javascript
+function sayHi(){
+    console.log('Hello,', this.name);
+}
+var person1 = {
+    name: 'YvetteLau',
+    sayHi: function(){
+        setTimeout(function(){
+            console.log('Hello,',this.name);
+        })
+    }
+}
+var person2 = {
+    name: 'Christina',
+    sayHi: sayHi
+}
+var name='Wiliam';
+person1.sayHi();
+setTimeout(person2.sayHi,100);
+setTimeout(function(){
+    person2.sayHi();
+},200);
+```
+
+结果为
+
+```javascript
+Hello, Wiliam
+Hello, Wiliam
+Hello, Christina
+```
+
+第一条输出很容易理解，setTimeout 的回调函数中，this 使用的是默认绑定，非严格模式下，执行的是全局对象；
+第二条输出是不是有点迷惑了？说好 XXX.fun() 的时候，fun 中的 this 指向的是 XXX 呢，为什么这次却不是这样了！Why?
+其实这里我们可以这样理解: setTimeout(fn,delay){ fn(); }, 相当于是将 person2.sayHi 赋值给了一个变量，最后执行了变量，这个时候，sayHi 中的 this 显然和 person2 就没有关系了。
+第三条虽然也是在 setTimeout 的回调中，但是我们可以看出，这是执行的是 person2.sayHi() 使用的是隐式绑定，因此这是 this 指向的是 person2，跟当前的作用域没有任何关系。
+
+### 6.4.3. 函数用call或者apply调用(显式绑定)
 
 当一个函数被call或apply调用时，this的值就取传入对象的值
 
@@ -1358,10 +1427,57 @@ fn.call(obj);
 
 ![call or apply](JavaScript高级程序设计/call_or_apply.png)
 
-### 全局&调用普通函数
+#### 显式绑定的丢失问题
+
+```javascript
+function sayHi(){
+    console.log('Hello,', this.name);
+}
+var person = {
+    name: 'YvetteLau',
+    sayHi: sayHi
+}
+var name = 'Wiliam';
+var Hi = function(fn) {
+    fn();
+}
+Hi.call(person, person.sayHi);
+```
+
+输出的结果是 Hello, Wiliam. 原因很简单，Hi.call(person, person.sayHi) 的确是将 this 绑定到 Hi 中的 this 了。但是在执行 fn 的时候，相当于直接调用了 sayHi 方法 (记住: person.sayHi 已经被赋值给 fn 了，隐式绑定也丢了)，没有指定 this 的值，对应的是默认绑定。
+
+现在，我们希望绑定不会丢失，要怎么做？很简单，调用 fn 的时候，也给它硬绑定。
+
+```javascript
+function sayHi(){
+    console.log('Hello,', this.name);
+}
+var person = {
+    name: 'YvetteLau',
+    sayHi: sayHi
+}
+var name = 'Wiliam';
+var Hi = function(fn) {
+    fn.call(this);
+}
+Hi.call(person, person.sayHi);
+```
+
+此时，输出的结果为: Hello, YvetteLau，因为 person 被绑定到 Hi 函数中的 this 上，fn 又将这个对象绑定给了 sayHi 的函数。这时，sayHi 中的 this 指向的就是 person 对象。
+
+### 6.4.4. 全局&调用普通函数(new绑定)
 
 在全局下，this永远是Window
-普通函数在调用时，其中this就是Window，如上面1与2的第2个例子全是普通函数
+普通函数在调用时，其中this就是Window，如上面1与2的第2个例子全是普通函数。
+
+```javascript
+function sayHi(){
+    console.log('Hello,', this.name);
+}
+var name = 'YvetteLau';
+sayHi();
+```
+如果在浏览器环境中运行，那么结果就是 Hello,YvetteLau
 
 # 7. 函数表达式
 
@@ -1404,9 +1520,9 @@ function createComparisionFunction(propertyName){
 函数第一次被调用的时候发生了什么：
 当某个函数第一次被调用时，会创建一个执行环境及相应的作用域链，并把作用域链赋值给一个特殊的内部属性（即[[Scope]])。然后，使用 this,arguments 和其它命名参数的值来初始化函数的活动对象。但在作用域链中，外部函数的活动对象始终处于第二位，外部函数的外部函数的活动对象处于第三位··· 直至作为作用域链终点的全局执行环境。
 
-### 闭包常见形式
+### 7.2.1. 闭包常见形式
 
-#### 函数作为返回值
+#### 7.2.1.1. 函数作为返回值
 
 ```javascript
 function fn(){
@@ -1423,7 +1539,7 @@ f1(15);
 
 如上代码，bar函数作为返回值，赋值给f1变量，执行f1(15)时，用到了fn作用域下的max变量的值。
 
-#### 函数作为参数被传递
+#### 7.2.1.2. 函数作为参数被传递
 
 ```javascript
 var max = 10;
@@ -1441,7 +1557,7 @@ var fn = function(x){
 
 如上代码中，fn函数作为一个参数被传递进入另一个函数，赋值给f参数。执行f(15)时，max变量的取值是10，而不是100。
 
-### 7.2.1. 内存泄漏
+### 7.2.2. 内存泄漏
 
 ```javascript
 function assignHandler(){
