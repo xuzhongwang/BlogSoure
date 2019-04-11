@@ -23,7 +23,7 @@ tags:
   
 - 不需要设置的属性可以省略，取默认值，但必须保留 font-size 与 font-family
 
-## input提示
+## 2.2. input提示
 
 ```html
 <input type="text" placeholder="请输入内容"/> 
@@ -303,23 +303,23 @@ CSS 定位机制有3种：普通流（标准流）、浮动和定位
 - 普通流(normal flow) ：自上而下，自左而右
 - 浮动：最开始用来做文字环绕效果
 
-### 什么是浮动
+### 10.6.1. 什么是浮动
 
 元素浮动是指设置了浮动属性的元素会脱离标准普通流的控制，移动到其父元素中指定位置的过程。
 
-### 浮动与行内块
+### 10.6.2. 浮动与行内块
 
 行内块之间有难以却除的间隙
 行内元素或块级元素添加浮动后变为行内块
 
-## 版心和布局流程
+## 10.7. 版心和布局流程
 
 - 确定页面的版心
 - 分析页面中的行模块，以及每个行模块中的列模块
 - 制作HTML结构
 - CSS初始化，然后开始运用盒子模型的原理，通过 DIV+CSS布局来控制网页中的各个模块。
 
-### 清除浮动的本质
+### 10.7.1. 清除浮动的本质
 
 清除浮动主要是为了解决父级元素因为子级浮动引起内部高度为0的问题。
 
@@ -340,17 +340,17 @@ CSS 定位机制有3种：普通流（标准流）、浮动和定位
 使用after伪元素|.clearfix:after{content:".";display:block;height:0;visibility:hidden;clear:both}|符合闭合浮动思维，结构主义化明确|由于IE6-7不支持after,使用zoom:1触发 hasLayout
 双伪元素|.clearfix:before,.clearfix:after{content:"",display:table}  .clearfix:after{clear:both} .clearfix{*zoom:1;}|代码更简洁|由于IE6-7不支持after,使用zoom:1触发 hasLayout
 
-# 定位
+# 11. 定位
 
-## 元素的定位属性
+## 11.1. 元素的定位属性
 
 元素的定位属性主要包括定位模式和边偏移两部分
 
-### 边偏移
+### 11.1.1. 边偏移
 
 top,bottom,left,right
 
-### 定位模式
+### 11.1.2. 定位模式
 
 语法: 选择器（postition属性值)
 
@@ -361,18 +361,18 @@ relative|相对定位，相对于其原文档流位置进行定位|不脱标，�
 absolute|绝对定位，相对于其上一个已经定位的父元素进行定位|完全脱标，不占有位置|可以|相对于定位父级移动位置
 fixed|固定定位，相对于浏览器窗口进行定位|完全脱标，不占有位置|可以|相对于浏览器移动位置
 
-#### 静态定位
+#### 11.1.2.1. 静态定位
 
 对于边偏移无效，通常用于清除定位的。
 
-#### 相对定位
+#### 11.1.2.2. 相对定位
 
 - 相对定位最重要的一点是，它可以通过边偏移移动位置，但是原来所占的位置，继续占有。
 - 其次，每次移动的位置，是以自己的左上角为基点移动的。
 
 相对定位的盒子仍在标准流中，它后面的盒子仍以标准流来对待它
 
-#### 绝对定位
+#### 11.1.2.3. 绝对定位
 
 绝对定位是完全脱标的，它不占有位置。
 
@@ -382,24 +382,105 @@ fixed|固定定位，相对于浏览器窗口进行定位|完全脱标，不占�
 
 子绝父相：意思是子级是绝对定位的话，父级要用相对定位。
 
-#### 固定定位
+#### 11.1.2.4. 固定定位
 
 - 固定定位元素跟父亲没有任何关系
 - 固定定位完全脱标，不占有位置，不随着滚动条滚动。
 
-### 叠放次序(z-index)
+### 11.1.3. 叠放次序(z-index)
 
 - z-index 的默认值是0，取值越大，定位元素层叠越居上
 - 如果取值相同，则根据书写顺序，后来居上
 - 后面数字一定不能加单位
 - 只有相对定位、绝对定们、固定定位有此属性。
 
-### 定位模式的转换
+### 11.1.4. 定位模式的转换
 
 跟浮动一样，元素添加了绝对定位和固定定位之后，元素模式也会发生转换，都转换为行内块模式。
 
-### 元素的显示与隐藏
+### 11.1.5. 元素的显示与隐藏
 
 隐藏： 
 display : none 隐藏之后不保留位置
 visibility ：hidden 隐藏之后保留位置
+
+# CSS 高级技巧
+
+## CSS 用户界面样式
+
+### 鼠标样式 cursor
+
+```css
+cursor: default|pointer|move|text
+```
+
+### 轮廓 outline
+
+取消轮廓线
+
+```css
+outline: 0;
+```
+
+### 防止拖拽文本域
+
+```css
+textarea {
+    resize: none;
+}
+```
+
+### 却除图片底侧空白缝隙
+
+图片或者表单等行内块元素，它的底线会和父级盒子的基线对齐，这样会造成一个问题，就是图片底侧会有一个空白的缝隙。解决方法是：
+
+- 转换为块级元素
+- vertical-align : top 
+
+### 溢出文字隐藏
+
+word-break ：自动换行
+
+white-space: nowrap:强制在一行显示所有文本
+
+text-overflow: clip|ellipsis
+
+```css
+white-space: nowrap;
+overflow:hidden
+text-overflow: ellipsis  超出部分用省略号
+```
+
+### CSS 精灵技术
+
+简单地说，精灵技术就是一种处理网页背景图像的方式。
+
+### 字体图标
+
+上传生成字体包：
+
+http://icomoon.io 
+
+https://www.iconfont.cn/  包含淘宝图标库和阿里妈妈图标库
+
+http://fontello.com/ 在线定制自己的 icon font 字体图标字库，也可以直接从 GitHub 下载整个图标集
+
+http://fortawesome.github.io/Font-Awesome/
+
+步骤
+
+1. 在样式里面声明字体
+
+```css
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?7yvqxr');
+  src:  url('fonts/icomoon.eot?7yvqxr#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?7yvqxr') format('truetype'),
+    url('fonts/icomoon.woff?7yvqxr') format('woff'),
+    url('fonts/icomoon.svg?7yvqxr#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+```
