@@ -404,3 +404,83 @@ fixed|固定定位，相对于浏览器窗口进行定位|完全脱标，不占�
 display : none 隐藏之后不保留位置
 visibility ：hidden 隐藏之后保留位置
 
+# CSS 高级技巧
+
+## CSS 用户界面样式
+
+### 鼠标样式 cursor
+
+```css
+cursor: default|pointer|move|text
+```
+
+### 轮廓 outline
+
+取消轮廓线
+
+```css
+outline: 0;
+```
+
+### 防止拖拽文本域
+
+```css
+textarea {
+    resize: none;
+}
+```
+
+### 却除图片底侧空白缝隙
+
+图片或者表单等行内块元素，它的底线会和父级盒子的基线对齐，这样会造成一个问题，就是图片底侧会有一个空白的缝隙。解决方法是：
+
+- 转换为块级元素
+- vertical-align : top 
+
+### 溢出文字隐藏
+
+word-break ：自动换行
+
+white-space: nowrap:强制在一行显示所有文本
+
+text-overflow: clip|ellipsis
+
+```css
+white-space: nowrap;
+overflow:hidden
+text-overflow: ellipsis  超出部分用省略号
+```
+
+### CSS 精灵技术
+
+简单地说，精灵技术就是一种处理网页背景图像的方式。
+
+### 字体图标
+
+上传生成字体包：
+
+http://icomoon.io 
+
+https://www.iconfont.cn/  包含淘宝图标库和阿里妈妈图标库
+
+http://fontello.com/ 在线定制自己的 icon font 字体图标字库，也可以直接从 GitHub 下载整个图标集
+
+http://fortawesome.github.io/Font-Awesome/
+
+步骤
+
+1. 在样式里面声明字体
+
+```css
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?7yvqxr');
+  src:  url('fonts/icomoon.eot?7yvqxr#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?7yvqxr') format('truetype'),
+    url('fonts/icomoon.woff?7yvqxr') format('woff'),
+    url('fonts/icomoon.svg?7yvqxr#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+```
