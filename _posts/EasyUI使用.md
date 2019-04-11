@@ -138,12 +138,16 @@ $.parser.parse('#cc');//带一个jquery 选择器，使用这样的方式能够�
 ## 5.2. 将指定value值的checkobx选中
 
 ```javascript
-            if (res.Data != null) {
-                $("#Flags input:checkbox").each(function (index, ele) {
-                    var value = ele.value;
-                    if (res.Data.indexOf(value) >= 0) {
-                        $(this).attr("checked", 'true');
-                    }
-                });
+    if (res.Data != null) {
+        $("#Flags input:checkbox").each(function (index, ele) {
+            var value = ele.value;
+            if (res.Data.indexOf(value) >= 0) {
+                $(this).attr("checked", 'true');
             }
+        });
+    }
 ```
+
+# 常用图标汇总
+
+![常用图标.png](EasyUI使用/常用图标.png)
