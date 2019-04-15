@@ -200,6 +200,12 @@ E[attr$=val]|属性值包含 val 字符并且在“结束”位置
 - E::selection 可改变选中文本的样式
 - E::before和 E::after 在E元素内部开始的位置和结束位创建一个元素，该元素为行内元素，且必须结合content属性使用
 
+### before和after伪元素（详解）
+
+伪元素 before 和 after 添加的内容默认是 inline元素，必须设置content 属性
+伪元素是不占位置的。
+
+
 # 7. CSS 书写规范
 
 ## 7.1. 空格规范
@@ -482,5 +488,101 @@ http://fortawesome.github.io/Font-Awesome/
   font-weight: normal;
   font-style: normal;
 }
-
 ```
+
+### 滑动门技术
+
+核心技术是利用CSS精灵技术和盒子padding撑开宽度，以便适应不同字数的导航栏。
+
+### 过渡(css3)
+
+语法格式：
+
+```css
+transition:要过渡的属性 花费时间 运动曲线 何时开始
+如果有多种变化，用逗号隔开
+```
+
+属性|描述|
+-|-|
+transition|简写属性，用于在一个属性中设置四个过渡属性
+transition-property|规定应用过渡的CSS属性名称
+transition-duration|定义过渡效果花费的时间，默认是0
+transition-timing-function|规定过渡效果的时间曲线，默认是'ease'
+transition-delay|规定过渡效果何时开始，默认是0
+
+### 2D变形（CSS3）transform
+
+- 移动 translate(x,y) ,若参数与百分比，以自己的宽度为准
+- 缩放 scale(x,y)
+- 旋转 rotate(deg),改变旋转中心点 transform-origin: top left;
+- 倾斜 skew(deg,deg)
+
+定位盒子居中对齐
+
+```css
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%,-50%);
+```
+
+### 3D变形(CSS3) transform
+
+#### 旋转
+
+- transform: rotateX
+- transform: rotateY
+- transform: rotateZ
+
+#### 透视(perspective)
+
+给父级元素添的加属性。视距越大，效果越不明显。
+
+#### 移动
+
+- transform: translateX
+- transform: translateY
+- transform: translateZ:通常与视距一起使用。越大，物体越近，看到的越大。
+- transform: translate3d(x,y,z),xy可以是px或者百分比，z只能是px
+
+### 非正面面对隐藏
+
+backface-visibility: hidden;
+
+### 动画(CSS3) animation
+
+语法格式
+
+```css
+animation: 动画名称 动画时间 运动曲线 何时开始 播放次数 是否反方向
+```
+
+属性|描述|
+-|-|
+@keyframes|规定动画
+animation|所有动画属性的简写属性，除了 animation-play-state 属性
+animation-name|规定 @keyframes 动画的名称
+animation-duration|规定动画完成一个周期所花费的秒或毫秒。默认是0
+animation-timing-function|规定动画的速度曲线。默认是"ease"
+animation-delay|规定动画何时开始。默认是0
+animation-iteration-count|规定动画播放的次数。默认是1
+animation-direction|规定动画是否在下一周期逆向地播放，默认是"normal"
+animation-play-state|规定动画是否正在运行或暂停，默认是"running"
+animation-fill-mode|规定对象动画时间之外的状态。
+
+### 伸缩布局
+
+flex-direction:调整方向
+justify-content:调整主轴对齐
+align-item:调整垂直对齐，针对一行
+flex-wrap：控制是否换行
+align-content:调整垂直对齐，针对多行，使用必须指定如下属性。
+
+```css
+display: flex;
+flex-flow: row wrap
+```
+
+order属性
+

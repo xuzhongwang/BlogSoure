@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		section {
+			width: 400px;
+			height: 400px;
+			background: url(图片轮播/images/timg.jpg) no-repeat;
+			margin: 200px auto;
+			position: relative;
+			perspective: 1000px;
+		}
+		.door-l,.door-r {
+			background-color: blue;
+			width: 50%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			border: 1px solid #000;
+			transition: all 1s;
+		}
+		.door-l {
+			left: 0;
+			transform-origin: left;
+		}
+		.door-r {
+			right: 0;
+			transform-origin: right;
+		}
+		.door-l::before,.door-r::before {
+			content: "";
+			width: 20px;
+			height: 20px;
+			border: 1px solid #000;
+			border-radius: 50%;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		.door-l::before {
+			right: 5px;
+
+		}
+		.door-r::before {
+			left: 5px;
+		}
+		section:hover .door-l {
+			transform: rotateY(-130deg);
+		}
+		section:hover .door-r {
+			transform: rotateY(130deg);
+		}
+
+	</style>
+</head>
+<body>
+	<section>
+		<div class="door-l"></div>
+		<div class="door-r"></div>
+	</section>
+</body>
+</html>
