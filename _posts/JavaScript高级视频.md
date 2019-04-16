@@ -20,8 +20,28 @@ js不是一门面向对象的语言，是基于对象的语言，js来模拟面�
 
 ## 字面量的方式
 
-
+```javascript
+// 字面量
+var per1 = {
+    name:"test",
+    age:20
+};
+```
 
 ## 调用系统的构造函数
 
+```javascript
+var per = new Object();
+per.name = "test";
+pert.age = 20;
+```
+
 ## 自定义构造函数方式
+
+```javascript
+function Person(name,age){
+    this.name = name;
+    this.age = age;
+}
+var per = new Person("test",20);
+```
