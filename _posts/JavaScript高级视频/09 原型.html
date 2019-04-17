@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+function Person(name){
+    this.name = name;
+}
+Person.prototype.eat = function(){
+    console.log("I want to eat!");
+};
+var per1 = new Person("张三");
+var per2 = new Person("李四");
+console.dir(per1);
+console.dir(per2);
+console.dir(Person);
+console.log(per1.eat == per2.eat);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

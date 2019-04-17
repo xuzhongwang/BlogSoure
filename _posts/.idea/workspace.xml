@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d1da2437-aaef-45e0-8f1c-287d677c2d3d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JavaScript高级视频.md" beforeDir="false" afterPath="$PROJECT_DIR$/JavaScript高级视频.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaScript高级视频/03 创建对象的三种方式.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaScript高级视频/03 创建对象的三种方式.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -13,30 +15,28 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/_posts$03__html.dat" NAME="03 创建对象的三种方式.html Coverage Results" MODIFIED="1555397724568" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="WipCoverageRunner" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/JavaScript高级视频/03 创建对象的三种方式.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="9" selection-start-line="9" selection-end-line="13" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/JavaScript高级视频.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="765">
-                <caret line="45" column="30" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
-              </first_editor>
-              <second_editor />
+        <entry file="file://$PROJECT_DIR$/JavaScript高级视频/09 原型.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="10" column="21" lean-forward="true" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -44,8 +44,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/JavaScript高级视频/03 创建对象的三种方式.html" />
         <option value="$PROJECT_DIR$/JavaScript高级视频.md" />
+        <option value="$PROJECT_DIR$/JavaScript高级视频/03 创建对象的三种方式.html" />
+        <option value="$PROJECT_DIR$/JavaScript高级视频/08 原型" />
+        <option value="$PROJECT_DIR$/JavaScript高级视频/08 原型.html" />
+        <option value="$PROJECT_DIR$/JavaScript高级视频/09 原型.html" />
       </list>
     </option>
   </component>
@@ -71,6 +74,11 @@
               <item name="_posts" type="b2602c69:ProjectViewProjectNode" />
               <item name="_posts" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="_posts" type="b2602c69:ProjectViewProjectNode" />
+              <item name="_posts" type="462c0819:PsiDirectoryNode" />
+              <item name="JavaScript高级视频" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -78,13 +86,14 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="settings.editor.selected.configurable" value="reference.idesettings.emmet.xml" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -98,8 +107,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.03 创建对象的三种方式.html">
+  <component name="RunManager" selected="JavaScript Debug.09 原型.html">
     <configuration name="03 创建对象的三种方式.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/_posts/JavaScript高级视频/03 创建对象的三种方式.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="08 原型" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/_posts/JavaScript高级视频/08 原型" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="09 原型.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/_posts/JavaScript高级视频/09 原型.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <configuration name="34 携程网.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/_posts/CSS入门及提高/example/34 携程网.html" useBuiltInWebServerPort="true">
@@ -107,6 +122,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug.09 原型.html" />
+        <item itemvalue="JavaScript Debug.08 原型" />
         <item itemvalue="JavaScript Debug.03 创建对象的三种方式.html" />
         <item itemvalue="JavaScript Debug.34 携程网.html" />
       </list>
@@ -124,24 +141,27 @@
       <updated>1555316140782</updated>
       <workItem from="1555316145110" duration="424000" />
       <workItem from="1555318580074" duration="1445000" />
-      <workItem from="1555377641246" duration="404000" />
+      <workItem from="1555377641246" duration="1730000" />
+      <workItem from="1555396233684" duration="1009000" />
+      <workItem from="1555397262891" duration="566000" />
+      <workItem from="1555398164078" duration="457000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2273000" />
+    <option name="totallyTimeSpent" value="5631000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.20179136" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2035865" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.329718" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32934782" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39891306" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -152,10 +172,20 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Coverage" order="3" side_tool="true" weight="0.32977587" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="javascript-exception">
+          <properties />
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/javascript高级程序设计.md">
@@ -189,20 +219,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JavaScript高级视频/03 创建对象的三种方式.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="9" selection-start-line="9" selection-end-line="13" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JavaScript高级视频.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="765">
-            <caret line="45" column="30" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
+          <first_editor relative-caret-position="690">
+            <caret line="26" column="10" lean-forward="true" selection-start-line="26" selection-start-column="10" selection-end-line="26" selection-end-column="10" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JavaScript高级视频/03 创建对象的三种方式.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JavaScript高级视频/08 原型">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JavaScript高级视频/09 test.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JavaScript高级视频/08 原型.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JavaScript高级视频/09 原型.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="10" column="21" lean-forward="true" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
         </state>
       </provider>
     </entry>

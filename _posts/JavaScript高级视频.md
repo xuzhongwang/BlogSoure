@@ -45,3 +45,42 @@ function Person(name,age){
 }
 var per = new Person("test",20);
 ```
+
+# 原型的引入
+
+通过来添加方法，解决数据共享，节省内存空间。
+
+## 构造函数、原型与实例对象的关系
+
+- 构造函数可以实例化对象
+- 构造函数中有一个属性prototype,是构造函数的原型对象
+- 构造函数的原型对象(prototype)中有一个constructor构造器，这个构造器指向的就是自己所在的原型对象所在的构造函数
+- 实例对象的原型对象(__proto__)指向的是该构造函数的原型对象
+- 构造函数的原型对象中(prototype)中的方法是可以被实例对象直接访问的。
+
+## 利用原型共享数据
+
+不需要共享的数据写在构造函数中，需要共享的数据写在原型中。
+
+```javascript
+function Student(name,age){
+    this.name = name;
+    this.age = age;
+}
+Student.prototype = {
+    constructor: Student,//此种写法必须手动指定构造器
+    height:"199",
+    study:function(){
+        console.log("happy");
+    }
+}
+```
+
+## 局部变量变成全局变量
+
+```javascript
+(function(win){
+    win.num = 10;
+})(window)
+console.log(num);
+```
