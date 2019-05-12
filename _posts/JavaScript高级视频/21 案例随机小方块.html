@@ -10,7 +10,20 @@
 		background-color: #ccc;
 		position: relative;
 	}
+	.food{
+		width: 20px;	
+		height: 20px;	
+		background: red;
+		position: absolute;
+	}
 </style>
+
+</head>
+<body>
+	<div class="map">
+		<!-- <div class="food"></div> -->
+	</div>
+</body>
 <script>
 	//产生随机数对象
 	(function(window){
@@ -25,7 +38,7 @@
 	// console.log(Random.getRandom(0,5))
 	//产生小方块对象
 	(function(window){
-		var map = document.querySelector(".map");
+		// var map = document.querySelector(".map");
 		function Food(width,height,color){
 			this.width = width||20;
 			this.height = height||20;
@@ -35,16 +48,17 @@
 			this.element = document.createElement("div");
 		}
 		Food.prototype.init = function(){
-			debugger;
-			// var map = document.querySelector(".map");
+			var map = document.querySelector(".map");
 			var div = this.element;
 			div.style.width = this.width+"px";
 			div.style.height = this.height+"px";
-			div.style.color = this.color;
-			div.style.position = "absolut";
+			div.style.background = this.color;
+			div.style.position = "absolute";
+			map.appendChild(div);	
 			this.render(map);
 		}
 		Food.prototype.render = function(map){
+			// debugger;
 			this.x = Random.getRandom(0,map.offsetWidth/this.width)*this.width;
 			this.y = Random.getRandom(0,map.offsetHeight/this.height)*this.height;
 			var div = this.element;
@@ -57,8 +71,4 @@
 
 	})(window);
 </script>
-</head>
-<body>
-	<div class="map"></div>
-</body>
 </html>
