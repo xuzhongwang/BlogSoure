@@ -458,7 +458,7 @@ function compare(value1,value2){
 
 ### 5.2.6. 位置方法
 
-两个方法：indexOf()和lastIndexOf().这两个方法都接收两个参数
+两个方法： indexOf()和lastIndexOf().这两个方法都接收两个参数
 
 - 要查找的项
 
@@ -1816,7 +1816,7 @@ IE的事件流叫做事件冒泡，即事件最开始时由最具体的元素（
         alert("Hello World");
     }
 </script>
-<input type = "button" value = "click me" onclick="showMessage()" ></input>
+<input type = "button" value = "click me" onclick="showMessage()" />
 ```
 
 这样指定处理程序，首先会创建一个封装着元素属性值的函数，这个函数有一个局部变量 event，也就是事件对象。
