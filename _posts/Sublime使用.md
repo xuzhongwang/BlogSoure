@@ -245,3 +245,58 @@ Ctrl + B
 ```
 
 ctrl+B 预览
+
+# 安装Minify 
+
+## 通过 Package Control 安装Minify
+
+按 ctrl + shift + p   输入  Install Package 然后   输入Minify  按回车就可以安装啦
+
+## 安装note.js
+
+安装合成后打开cmd输入   node --version 如果出现版本信息就可以啦,否则的话就把nodejs的路径添加到系统环境变量里去;
+
+## 打开cmd输入下面命令安装
+
+```npm
+npm install -g clean-css uglifycss js-beautify html-minifier uglify-js minjson svgo
+```
+
+如果你已经安装过其中的一些的话可以用下面命令更新
+
+```npm
+npm update -g clean-css uglifycss js-beautify html-minifier uglify-js minjson svgo
+```
+
+## 开始使用
+
+使用ctrl + alt + m 压缩文件 会生成一个新的min文件
+
+使用ctrl + alt + shift + m 格式化文件
+
+## 自定义（示例）
+
+```set
+  {
+      "settings": {
+          "Minify": {
+              "open_file": false,
+              "auto_minify_on_save": true,
+              "allowed_file_types": [
+                  "css",
+                  "js",
+                  "svg"
+              ]
+          }
+      }
+  }
+```
+ 
+PS:
+
+sublime js解压 jsFormat插件
+
+使用方法：
+1、快捷键：ctrl+alt+f
+2、先用快捷键打开命令面板 “ctrl + shift + p”, 再输入 “Format: Javascript” 就可以使用格式化命令
+

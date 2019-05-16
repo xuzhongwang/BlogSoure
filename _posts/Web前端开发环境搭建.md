@@ -4,6 +4,47 @@ date: 2018-08-11 15:37:32
 tags:
 ---
 
+# npm配置
+
+如果提示代理有问题:
+
+```npm
+$ npm config set proxy null
+$ npm config set https-proxy null
+```
+
+## 配置淘宝镜像
+1. 命令
+
+```npm
+npm config set registry https://registry.npm.taobao.org
+```
+
+2. 验证命令
+
+```npm
+npm config get registry
+```
+
+如果返回https://registry.npm.taobao.org，说明镜像配置成功。
+
+ 
+
+二、通过使用cnpm安装
+1. 安装cnpm
+
+```npm
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+```
+
+2. 使用cnpm
+
+```npm
+cnpm install xxx
+```
+
+
+
 # 插件安装
 
 - Nodejs
