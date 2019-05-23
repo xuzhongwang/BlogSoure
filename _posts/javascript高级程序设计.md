@@ -1775,9 +1775,12 @@ assign()方法：
 ```javascript
 location.assign("url");
 ```
+
 # 9. 客户端检测
 
 # 10. DOM
+
+
 
 # 11. DOM扩展
 
@@ -1878,6 +1881,7 @@ btn.addEventListener("click",function(){
     alert(this.id);
 },false);
 ```
+
 使用 DOM2 级方法添加事件处理程序的主要好处是可以添加多个事件处理程序。
 通过 addEventListner() 添加的事件处理程序只能使用 removeEventListener() 来移除。移除时传入的参数与添加处理程序时使用的参数相同。也就意味着通过 addEventListner() 添加的匿名函数将无法移除。
 
