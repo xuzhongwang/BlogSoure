@@ -38,6 +38,7 @@
 	// console.log(Random.getRandom(0,5))
 	//产生小方块对象
 	(function(window){
+		var elements = [];
 		// var map = document.querySelector(".map");
 		function Food(width,height,color){
 			this.width = width||20;
@@ -64,11 +65,35 @@
 			var div = this.element;
 			div.style.left = this.x + "px";
 			div.style.top = this.y + "px";
+			elements.push(div);
 		};
 
-		var fd = new Food(20,20,"red");
-		fd.init();
+		function remove(){
+			for (var i = elements.length - 1; i >= 0; i--) {
+				var ele = elements[i];
+				var parent = ele.parentNode();
+				parent.remove(ele);
+				elements.splice(0, 1, ele);
+			}
+		}
 
+		window.Food = Food;
 	})(window);
+
+	(function(){
+		function Snake(width,height,direction){
+			this.width = width || 20;
+			this.height = height || 20;
+			this.direction = direction || "right";
+			this.body = [
+				{x:3,y:2,color:"red"},
+				{x:2,y:2,color:"yellow"},
+				{x:1,y:2,color:"yellow"},
+			];
+		}
+	})();
+	var fd = new Food(20,20,"red");
+	fd.init();
+	elements
 </script>
 </html>
