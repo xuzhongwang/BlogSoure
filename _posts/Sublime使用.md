@@ -300,3 +300,25 @@ sublime js解压 jsFormat插件
 1、快捷键：ctrl+alt+f
 2、先用快捷键打开命令面板 “ctrl + shift + p”, 再输入 “Format: Javascript” 就可以使用格式化命令
 
+# 安装SublimeCodeIntel
+
+## 安装CodeIntel 
+
+```python
+pip3 install --upgrade --pre CodeIntel
+```
+
+# SublimeREPL
+
+设置快捷键
+
+```python
+	{ "keys": ["f5"],
+	  "caption": "SublimeREPL: Python - RUN current file",        
+	  "command": "run_existing_window_command",        
+	  "args": {
+	  	    "id": "repl_python_run",            
+	  		"file": "config/Python/Main.sublime-menu"
+        }
+    }
+```
